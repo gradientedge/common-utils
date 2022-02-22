@@ -1,0 +1,31 @@
+{
+  "name": "@gradientedge/error",
+  "version": "0.0.0",
+  "description": "Provides an `ExtendedError` class allowing additional data to be set on the error object",
+  "author": "Jimmy Thomson <jimmy@gradientedge.com>",
+  "homepage": "https://github.com/gradientedge/common-utils#readme",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "directories": {
+    "lib": "src",
+    "test": "__tests__"
+  },
+  "files": [
+    "dist",
+    "!dist/**/__tests__"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gradientedge/common-utils.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist && rm -f tsconfig.tsbuildinfo",
+    "build": "tsc",
+    "build:watch": "tsc --incremental --watch",
+    "test": "pnpm test --workspace --filter @gradientedge/error"
+  },
+  "bugs": {
+    "url": "https://github.com/gradientedge/common-utils/issues"
+  }
+}

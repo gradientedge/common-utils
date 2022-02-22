@@ -13,9 +13,9 @@ function getProjectConfig(config) {
   }
 }
 
-const projects = [
-  { path: 'packages/logger', packageName: '@gradientedge/logger' },
-].map((config) => getProjectConfig(config))
+const projects = [{ path: 'packages/logger', packageName: '@gradientedge/logger' }].map((config) =>
+  getProjectConfig(config),
+)
 
 export default {
   preset: 'ts-jest',

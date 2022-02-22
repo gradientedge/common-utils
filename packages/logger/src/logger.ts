@@ -26,10 +26,12 @@ export class Logger {
   constructor(options?: LoggerOptions) {
     this.baseData = options?.baseData || {}
     this.pretty = process?.env.NODE_ENV === 'development'
-    if (VALID_LEVEL_NAMES.includes(options?.level)) {
+    if (options?.level && VALID_LEVEL_NAMES.includes(options.level)) {
       this.levelName = options?.level
     } else if (VALID_LEVEL_NAMES.includes(LOG_LEVEL)) {
-      this.levelName = options?.level
+      this.levelName = LOG_LEVEL
+    } else {
+      this.levelName = 'warn'
     }
 
     this.levelNumber = LOG_LEVEL_NUMBER[this.levelName]
@@ -119,7 +121,7 @@ export function maskSensitiveData(data: unknown, propertyNames: string[], mask =
  * Transform an Error object in to something more digestible.
  * We do some specific transformation of Axios errors.
  */
-function transformError(error: Error & Record<string, any>, recursionLevel = 0) {
+function transformError(error: Error & Record<string, any>, recursionLevel = 0): any {
   if (recursionLevel > 5) {
     return
   }
@@ -165,7 +167,7 @@ function pickAxiosErrorFields(error: any) {
  * property, which potentially contains a massive object containing most of the GraphQL
  * schema object.
  */
-function transformGraphQLError(error: any, recursionLevel: number) {
+function transformGraphQLError(error: any, recursionLevel: number): any {
   return {
     message: error?.message,
     stack: error?.stack,

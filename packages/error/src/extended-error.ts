@@ -13,7 +13,7 @@ export interface ExtendedErrorOptions {
  * for debugging.
  */
 export class ExtendedError extends Error {
-  public readonly code: string
+  public readonly code: string | undefined
   public data?: Record<string, any>
   private readonly originalError: Error | undefined
 

@@ -19,7 +19,7 @@
     "clean": "rimraf dist && rm -f tsconfig.tsbuildinfo",
     "build": "tsc",
     "build:watch": "tsc --incremental --watch",
-    "test": "pnpm test --workspace --filter @gradientedge/mach-common-als"
+    "test": "pnpm test --workspace --filter @gradientedge/als"
   },
   "bugs": {
     "url": "https://github.com/gradientedge/common-utils/issues"

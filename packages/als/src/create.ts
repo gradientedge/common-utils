@@ -6,6 +6,6 @@ export interface StorageContainer<T = any> {
 
 export const contextLocalStorage = new AsyncLocalStorage<StorageContainer>()
 
-export function create<T = any>(data: T, callback) {
+export function create<T = any>(data: T, callback: () => any) {
   contextLocalStorage.run({ data }, callback)
 }

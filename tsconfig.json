@@ -11,6 +11,7 @@
     "esModuleInterop": true,
     "baseUrl": ".",
     "noEmit": false,
-    "types": ["node", "jest", "jest-extended"]
+    "types": ["node", "jest", "jest-extended"],
+    "strict": true
   }
 }

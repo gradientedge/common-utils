@@ -44,7 +44,10 @@ importers:
     specifiers: {}
 
   packages/error:
-    specifiers: {}
+    specifiers:
+      '@types/json-stringify-safe': ^5.0.0
+    devDependencies:
+      '@types/json-stringify-safe': 5.0.0
 
   packages/logger:
     specifiers:
@@ -988,6 +991,10 @@ packages:
 
   /@types/json-schema/7.0.9:
     resolution: {integrity: sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==}
+    dev: true
+
+  /@types/json-stringify-safe/5.0.0:
+    resolution: {integrity: sha512-UUA1sH0RSRROdInuDOA1yoRzbi5xVFD1RHCoOvNRPTNwR8zBkJ/84PZ6NhKVDtKp0FTeIccJCdQz1X2aJPr4uw==}
     dev: true
 
   /@types/lodash.clonedeep/4.5.6:

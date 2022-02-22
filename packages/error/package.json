@@ -27,5 +27,8 @@
   },
   "bugs": {
     "url": "https://github.com/gradientedge/common-utils/issues"
+  },
+  "devDependencies": {
+    "@types/json-stringify-safe": "^5.0.0"
   }
 }

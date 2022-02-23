@@ -1,90 +1,71 @@
 import stringify from 'json-stringify-safe'
 import util from 'util'
-import cloneDeep from 'lodash.clonedeep'
-import traverse from 'traverse'
-import {
-  LOG_LEVEL,
-  LOG_LEVEL_DEBUG,
-  LOG_LEVEL_ERROR,
-  LOG_LEVEL_INFO,
-  LOG_LEVEL_NUMBER,
-  LOG_LEVEL_WARN,
-} from './constants'
-import { LoggerOptions } from './types'
+import { LogLevelNumber } from './constants'
+import { LoggerOptions, LogLevel } from './types'
+import { transformData } from './transform/transform'
 
-const DEFAULT_MASKING_STRING = '********'
-const VALID_LEVEL_NAMES = ['debug', 'info', 'warn', 'error']
-
-const sensitivePropertyNames = ['password', 'authorization', 'auth-token']
+// An array of strings of valid log levels
+const validLogLeveLs = Object.values(LogLevel)
 
 export class Logger {
   public baseData: any
   public pretty: boolean
-  private readonly levelName: string
+  private readonly levelName: LogLevel
   private readonly levelNumber: number
 
   constructor(options?: LoggerOptions) {
     this.baseData = options?.baseData || {}
-    this.pretty = process?.env.NODE_ENV === 'development'
-    if (options?.level && VALID_LEVEL_NAMES.includes(options.level)) {
-      this.levelName = options?.level
-    } else if (VALID_LEVEL_NAMES.includes(LOG_LEVEL)) {
-      this.levelName = LOG_LEVEL
+    this.pretty = process?.env?.LOGGER_PRETTY === '1'
+    if (options?.level && validLogLeveLs.includes(options.level)) {
+      this.levelName = options.level
     } else {
-      this.levelName = 'warn'
+      this.levelName = LogLevel.TRACE
     }
+    this.levelNumber = LogLevelNumber[this.levelName]
+  }
 
-    this.levelNumber = LOG_LEVEL_NUMBER[this.levelName]
+  trace(...args: any[]) {
+    this.process(console.debug, LogLevelNumber[LogLevel.TRACE], LogLevel.TRACE, args)
   }
 
   debug(...args: any[]) {
-    this.process(console.debug, LOG_LEVEL_DEBUG, 'debug', args)
+    this.process(console.debug, LogLevelNumber[LogLevel.DEBUG], LogLevel.DEBUG, args)
   }
 
   info(...args: any[]) {
-    this.process(console.info, LOG_LEVEL_INFO, 'info', args)
+    this.process(console.info, LogLevelNumber[LogLevel.INFO], LogLevel.INFO, args)
   }
 
   warn(...args: any[]) {
-    this.process(console.warn, LOG_LEVEL_WARN, 'warn', args)
+    this.process(console.warn, LogLevelNumber[LogLevel.WARN], LogLevel.WARN, args)
   }
 
   error(...args: any[]) {
-    this.process(console.error, LOG_LEVEL_ERROR, 'error', args)
+    this.process(console.error, LogLevelNumber[LogLevel.ERROR], LogLevel.ERROR, args)
   }
 
   text(input: string) {
     console.debug(input)
   }
 
-  process(method: any, levelInt: number, level: string, args: any[]) {
-    if (levelInt < this.levelNumber) {
+  process(method: any, levelNumber: number, level: string, args: any[]) {
+    let data: any
+    if (levelNumber < this.levelNumber || !Array.isArray(args) || args.length === 0) {
       return
     }
-    if (!Array.isArray(args) || args.length === 0) {
-      return
-    }
-    let logData = { ...this.baseData, logLevel: level }
+    const output = { ...this.baseData, logLevel: level }
     if (typeof args[0] === 'string') {
-      logData.message = args[0]
-      logData.data = args.slice(1)
+      output.message = args[0]
+      data = args.slice(1)
     } else {
-      logData.data = args
+      data = args
     }
-    if (Array.isArray(logData.data)) {
-      logData.data.forEach((item: any) => {
-        if (item?.error instanceof Error) {
-          item.error = transformError(item.error)
-        }
-      })
-      if (logData.data.length === 1) {
-        logData.data = logData.data[0]
-      }
-    }
-    logData = maskSensitiveData(logData, sensitivePropertyNames)
+
+    output.data = transformData(data)
+
     if (this.pretty) {
       method(
-        util.inspect(logData, {
+        util.inspect(output, {
           showHidden: false,
           depth: null,
           colors: true,
@@ -94,85 +75,7 @@ export class Logger {
         }),
       )
     } else {
-      method(stringify(logData))
+      method(stringify(output))
     }
-  }
-}
-
-/**
- * Mask all properties defined by {@see propertyNames} in the given {@see data} object
- * with the mask string defined by the {@see mask} parameter.
- */
-export function maskSensitiveData(data: unknown, propertyNames: string[], mask = DEFAULT_MASKING_STRING) {
-  if (typeof data === 'object') {
-    propertyNames = propertyNames.map((name) => name.toLowerCase())
-    const mutatedData = cloneDeep(data)
-    traverse(mutatedData).forEach(function () {
-      if (propertyNames.includes(this.key?.toLowerCase() ?? '')) {
-        this.update(mask)
-      }
-    })
-    return mutatedData
-  }
-  return data
-}
-
-/**
- * Transform an Error object in to something more digestible.
- * We do some specific transformation of Axios errors.
- */
-function transformError(error: Error & Record<string, any>, recursionLevel = 0): any {
-  if (recursionLevel > 5) {
-    return
-  }
-  let simpleError: Record<string, any> = {}
-  Object.getOwnPropertyNames(error).forEach(function (key) {
-    simpleError[key] = error[key]
-  })
-  if (error.name === 'GraphQLError') {
-    return transformGraphQLError(error, recursionLevel)
-  }
-  if (error?.isAxiosError) {
-    simpleError = pickAxiosErrorFields(simpleError)
-  }
-  if (error?.data?.error?.isAxiosError) {
-    simpleError.data.error = pickAxiosErrorFields(simpleError)
-  }
-  return simpleError
-}
-
-/**
- * Return only the fields we really want to see from the Axios error object.
- * If we don't do this, then we get many thousands of lines of log lines as
- * the HttpsAgent is a huge deeply nested object.
- */
-function pickAxiosErrorFields(error: any) {
-  return {
-    message: error?.message,
-    name: error?.name,
-    code: error?.code,
-    stack: error?.stack,
-    config: {
-      url: error?.config?.url,
-      method: error?.config?.method,
-      headers: error?.config?.headers,
-      timeout: error?.config?.timeout,
-      params: error?.config?.params,
-    },
-  }
-}
-
-/**
- * Return a lightweight GraphQL error object. In particular, we don't want the `nodes`
- * property, which potentially contains a massive object containing most of the GraphQL
- * schema object.
- */
-function transformGraphQLError(error: any, recursionLevel: number): any {
-  return {
-    message: error?.message,
-    stack: error?.stack,
-    locations: error?.locations,
-    path: error?.path,
-    originalError: error?.originalError && transformError(error.originalError, recursionLevel + 1),
   }
 }

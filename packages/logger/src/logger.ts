@@ -1,7 +1,7 @@
 import stringify from 'json-stringify-safe'
 import util from 'util'
 import { LogLevelNumber } from './constants'
-import { LoggerOptions, LogLevel } from './types'
+import { LoggerOptions, LoggerTransport, LogLevel } from './types'
 import { transformData } from './transform/transform'
 
 // An array of strings of valid log levels
@@ -12,6 +12,7 @@ export class Logger {
   public pretty: boolean
   private readonly levelName: LogLevel
   private readonly levelNumber: number
+  private transport: LoggerTransport
 
   constructor(options?: LoggerOptions) {
     this.baseData = options?.baseData || {}
@@ -22,30 +23,36 @@ export class Logger {
       this.levelName = LogLevel.TRACE
     }
     this.levelNumber = LogLevelNumber[this.levelName]
+
+    if (options?.transport) {
+      this.transport = options.transport
+    } else {
+      this.transport = console
+    }
   }
 
   trace(...args: any[]) {
-    this.process(console.debug, LogLevelNumber[LogLevel.TRACE], LogLevel.TRACE, args)
+    this.process(this.transport.debug, LogLevelNumber[LogLevel.TRACE], LogLevel.TRACE, args)
   }
 
   debug(...args: any[]) {
-    this.process(console.debug, LogLevelNumber[LogLevel.DEBUG], LogLevel.DEBUG, args)
+    this.process(this.transport.debug, LogLevelNumber[LogLevel.DEBUG], LogLevel.DEBUG, args)
   }
 
   info(...args: any[]) {
-    this.process(console.info, LogLevelNumber[LogLevel.INFO], LogLevel.INFO, args)
+    this.process(this.transport.info, LogLevelNumber[LogLevel.INFO], LogLevel.INFO, args)
   }
 
   warn(...args: any[]) {
-    this.process(console.warn, LogLevelNumber[LogLevel.WARN], LogLevel.WARN, args)
+    this.process(this.transport.warn, LogLevelNumber[LogLevel.WARN], LogLevel.WARN, args)
   }
 
   error(...args: any[]) {
-    this.process(console.error, LogLevelNumber[LogLevel.ERROR], LogLevel.ERROR, args)
+    this.process(this.transport.error, LogLevelNumber[LogLevel.ERROR], LogLevel.ERROR, args)
   }
 
   text(input: string) {
-    console.debug(input)
+    this.transport.debug(input)
   }
 
   process(method: any, levelNumber: number, level: string, args: any[]) {
@@ -70,6 +77,7 @@ export class Logger {
           depth: null,
           colors: true,
           compact: false,
+          sorted: true,
           maxStringLength: null,
           maxArrayLength: null,
         }),

@@ -1,0 +1,57 @@
+on:
+  workflow_call:
+    secrets:
+      GIT_TOKEN:
+        required: true
+      NPM_TOKEN:
+        required: true
+      SLACK_WEBHOOK:
+        required: false
+
+name: Common Utils - Validate Pipeline
+
+env:
+  GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+  NODE_AUTH_TOKEN: ${{ secrets.GIT_TOKEN }}
+
+jobs:
+  build-and-test:
+    name: Validate Job
+    runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
+    strategy:
+      matrix:
+        node-version: [ 14.x ]
+    steps:
+      - name: Checkout Code
+        id: checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js ${{ matrix.node-version }}
+        id: setup-nodejs
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Setup Environment
+        id: setup-environment
+        uses: ./.github/actions/setup-env
+      - name: Build Applications
+        id: build-applications
+        uses: ./.github/actions/build
+      - name: Test Applications
+        id: test-applications
+        uses: ./.github/actions/test
+      - name: Publish Packages
+        id: publish-packages
+        uses: ./.github/actions/package
+        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && success() }}
+      - name: Notify Slack
+        id: notify-slack
+        uses: act10ns/slack@v1
+        if: always()
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

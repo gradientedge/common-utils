@@ -1,0 +1,39 @@
+{
+  "scripts": {
+    "clean": "pnpm clean --recursive",
+    "lint": "eslint \"**/*.ts\" --max-warnings=0",
+    "prettier": "prettier --check \"**/*.{ts,js,json}\"",
+    "prettify": "prettier --write \"**/*.{ts,js,json}\"",
+    "test": "jest --config=jest.config.ts",
+    "build": "pnpm clean && pnpm build --recursive",
+    "build:watch": "tsc --build --incremental --watch",
+    "preinstall": "npx only-allow pnpm",
+    "postinstall": "husky install",
+    "publish": "pnpm changeset publish",
+    "validate": "pnpm prettier && pnpm lint && pnpm build && pnpm test",
+    "version": "pnpm changeset version && pnpm i --lockfile-only"
+  },
+  "private": true,
+  "devDependencies": {
+    "@changesets/cli": "^2.21.0",
+    "@types/jest": "^27.4.0",
+    "@types/node": "^17.0.19",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^8.9.0",
+    "eslint-config-prettier": "^8.4.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "jest-extended": "^2.0.0",
+    "jest-mock": "^27.5.1",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "ts-jest": "^27.1.3",
+    "ts-node": "^10.5.0",
+    "tsc-watch": "^4.6.0",
+    "typescript": "^4.5.5"
+  },
+  "workspaces": [
+    "packages/**"
+  ]
+}

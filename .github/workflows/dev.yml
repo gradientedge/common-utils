@@ -1,0 +1,22 @@
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+name: Common Utils
+
+env:
+  name: Common Utils
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  validate:
+    name: Validate Application(s)
+    uses: ./.github/workflows/validate.yml
+    secrets:
+      GIT_TOKEN: ${{ secrets.GIT_TOKEN }}
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}

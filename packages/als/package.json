@@ -1,0 +1,29 @@
+{
+  "name": "@gradientedge/als",
+  "version": "0.0.0",
+  "description": "Small utility powered by `AsyncLocalStorage` that allows easy retrieval of request context data",
+  "author": "Jimmy Thomson <jimmy@gradientedge.com>",
+  "homepage": "https://github.com/gradientedge/common-utils#readme",
+  "license": "ISC",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist",
+    "!dist/**/__tests__"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gradientedge/common-utils.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist && rm -f tsconfig.tsbuildinfo",
+    "build": "tsc",
+    "build:watch": "tsc --incremental --watch",
+    "test": "pnpm test --workspace --filter @gradientedge/als"
+  },
+  "bugs": {
+    "url": "https://github.com/gradientedge/common-utils/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

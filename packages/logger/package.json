@@ -1,0 +1,37 @@
+{
+  "name": "@gradientedge/logger",
+  "version": "0.0.0",
+  "description": "Request-context sensitive logger package",
+  "author": "Jimmy Thomson <jimmy@gradientedge.com>",
+  "homepage": "https://github.com/gradientedge/common-utils#readme",
+  "license": "ISC",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist",
+    "!dist/**/__tests__"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gradientedge/common-utils.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist && rm -f tsconfig.tsbuildinfo",
+    "build": "tsc --build",
+    "build:watch": "tsc --build --incremental --watch",
+    "test": "pnpm test --workspace --filter @gradientedge/common-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/gradientedge/common-utils/issues"
+  },
+  "dependencies": {
+    "@gradientedge/als": "workspace:^0.0.0",
+    "json-stringify-safe": "^5.0.1",
+    "lodash.clonedeep": "^4.5.0",
+    "traverse": "^0.6.6"
+  },
+  "devDependencies": {
+    "@types/traverse": "^0.6.6",
+    "@types/lodash.clonedeep": "^4.5.0"
+  }
+}

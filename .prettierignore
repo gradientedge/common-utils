@@ -1,0 +1,18 @@
+CHANGELOG.*
+
+# Package manager files
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+lib/
+
+# Test/coverage output
+.coverage/
+
+# Prettier reformats code blocks inside Markdown, which affects rendered output
+*.md
+
+# VSCode config
+.vscode/

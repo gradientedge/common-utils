@@ -15,6 +15,7 @@ runs:
       uses: changesets/action@v1
       env:
         HUSKY: 0
+        NPM_TOKEN: ${{ env.NPM_TOKEN}}
       with:
         version: pnpm run version
         publish: pnpm run publish

@@ -1,6 +1,6 @@
 {
   "name": "@gradientedge/logger",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Request-context sensitive logger package",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
   "homepage": "https://github.com/gradientedge/common-utils#readme",
@@ -25,7 +25,7 @@
     "url": "https://github.com/gradientedge/common-utils/issues"
   },
   "dependencies": {
-    "@gradientedge/als": "workspace:^0.0.0",
+    "@gradientedge/als": "workspace:^0.1.0",
     "json-stringify-safe": "^5.0.1",
     "lodash.clonedeep": "^4.5.0",
     "traverse": "^0.6.6"

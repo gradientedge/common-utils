@@ -51,7 +51,7 @@ importers:
 
   packages/logger:
     specifiers:
-      '@gradientedge/als': workspace:^0.1.1
+      '@gradientedge/als': workspace:^0.1.2
       '@types/lodash.clonedeep': ^4.5.0
       '@types/traverse': ^0.6.6
       json-stringify-safe: ^5.0.1

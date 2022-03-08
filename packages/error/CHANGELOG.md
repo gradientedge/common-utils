@@ -1,5 +1,11 @@
 # @gradientedge/error
 
+## 0.1.2
+
+### Patch Changes
+
+- 9930409: Output code as commonjs
+
 ## 0.1.1
 
 ### Patch Changes

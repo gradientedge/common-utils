@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "description": "Request-context sensitive logger package",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
-  "homepage": "https://github.com/gradientedge/mach-api#readme",
+  "homepage": "https://github.com/gradientedge/common-utils#readme",
   "license": "ISC",
   "main": "dist/index",
   "types": "dist/index",

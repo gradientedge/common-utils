@@ -1,5 +1,13 @@
 # @gradientedge/logger
 
+## 0.1.2
+
+### Patch Changes
+
+- 9930409: Output code as commonjs
+- Updated dependencies [9930409]
+  - @gradientedge/als@0.1.2
+
 ## 0.1.1
 
 ### Patch Changes

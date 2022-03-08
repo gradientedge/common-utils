@@ -1,11 +1,11 @@
-# `@gradientedge/mach-common-logger`
+# `@gradientedge/logger`
 
 > TODO: description
 
 ## Usage
 
 ```
-const logger = require('@gradientedge/mach-common-logger');
+const logger = require('@gradientedge/logger');
 
 // TODO: DEMONSTRATE API
 ```

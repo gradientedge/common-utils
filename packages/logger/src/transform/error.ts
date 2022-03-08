@@ -11,13 +11,16 @@ export function transformError(error: Error & Record<string, any>, recursionLeve
     simpleError[key] = error[key]
   })
   if (error.name === 'GraphQLError') {
-    return transformGraphQLError(error, recursionLevel)
+    return transformGraphQLError(error, recursionLevel + 1)
   }
   if (error?.isAxiosError) {
     simpleError = pickAxiosErrorFields(simpleError)
   }
   if (error?.data?.error?.isAxiosError) {
     simpleError.data.error = pickAxiosErrorFields(simpleError)
+  }
+  if (simpleError.originalError) {
+    simpleError.originalError = transformError(error.originalError, recursionLevel + 1)
   }
   return simpleError
 }

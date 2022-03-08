@@ -1,9 +1,9 @@
 {
   "name": "@gradientedge/als",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Small utility powered by `AsyncLocalStorage` that allows easy retrieval of request context data",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
-  "homepage": "https://github.com/gradientedge/mach-api#readme",
+  "homepage": "https://github.com/gradientedge/common-utils#readme",
   "license": "ISC",
   "main": "dist/index",
   "types": "dist/index",

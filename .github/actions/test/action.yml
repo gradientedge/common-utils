@@ -1,0 +1,10 @@
+name: Test Applications
+description: Test Applications
+
+runs:
+  using: "composite"
+  steps:
+    - name: Test Common Utils
+      id: test-common-utils
+      shell: bash
+      run: pnpm validate

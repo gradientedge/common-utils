@@ -1,11 +1,11 @@
-# `@gradientedge/mach-common-error`
+# `@gradientedge/error`
 
 > TODO: description
 
 ## Usage
 
 ```
-const error = require('@gradientedge/mach-common-error');
+const error = require('@gradientedge/error');
 
 // TODO: DEMONSTRATE API
 ```

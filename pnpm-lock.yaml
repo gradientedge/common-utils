@@ -57,7 +57,6 @@ importers:
       json-stringify-safe: ^5.0.1
       lodash.clonedeep: ^4.5.0
       traverse: ^0.6.6
-      utility-types: ^3.10.0
     dependencies:
       '@gradientedge/als': link:../als
       json-stringify-safe: 5.0.1
@@ -66,7 +65,6 @@ importers:
     devDependencies:
       '@types/lodash.clonedeep': 4.5.6
       '@types/traverse': 0.6.32
-      utility-types: 3.10.0
 
 packages:
 
@@ -4150,11 +4148,6 @@ packages:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
     dependencies:
       punycode: 2.1.1
-    dev: true
-
-  /utility-types/3.10.0:
-    resolution: {integrity: sha512-O11mqxmi7wMKCo6HKFt5AhO4BwY3VV68YU07tgxfz8zJTIxr4BpsezN49Ffwy9j3ZpwwJp4fkRwjRzq3uWE6Rg==}
-    engines: {node: '>= 4'}
     dev: true
 
   /v8-compile-cache-lib/3.0.0:

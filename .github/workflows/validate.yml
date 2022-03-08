@@ -45,7 +45,7 @@ jobs:
       - name: Publish Packages
         id: publish-packages
         uses: ./.github/actions/package
-        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && success() }}
+#        if: ${{ github.ref == 'refs/heads/main' && github.event_name == 'push' && success() }}
       - name: Notify Slack
         id: notify-slack
         uses: act10ns/slack@v1

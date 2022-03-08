@@ -1,0 +1,10 @@
+name: Setup environment
+description: Setup environment
+
+runs:
+  using: "composite"
+  steps:
+    - uses: pnpm/action-setup@v2.0.1
+      with:
+        version: 6.25.1
+

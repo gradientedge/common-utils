@@ -1,0 +1,20 @@
+name: Publish Package(s)
+description: Publish Package(s)
+
+runs:
+  using: "composite"
+  steps:
+    - name: Authenticate Registry
+      id: authenticate-registry
+      shell: bash
+      run: |
+        echo "always-auth=true" > .npmrc
+        echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN}}" >> .npmrc
+    - name: Create Release Pull Request or Publish to npm
+      id: changesets
+      uses: changesets/action@v1
+      env:
+        HUSKY: 0
+      with:
+        version: pnpm run version
+        publish: pnpm run publish

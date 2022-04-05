@@ -16,7 +16,7 @@ export function transformData(data: any[]) {
   if (data.length === 1) {
     transformedData = data[0]
   } else {
-    transformedData = undefined
+    transformedData = data
   }
   return maskSensitiveData(transformedData)
 }

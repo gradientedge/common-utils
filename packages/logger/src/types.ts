@@ -8,6 +8,7 @@ export enum LogLevel {
 
 export interface LoggerOptions {
   level?: LogLevel
+  pretty?: boolean
   baseData?: Record<string, any>
   transport?: LoggerTransport
 }

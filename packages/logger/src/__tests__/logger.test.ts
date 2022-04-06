@@ -1,10 +1,15 @@
 import { Logger } from '../logger'
 import { LoggerTransport, LogLevel } from '../types'
 import * as constants from '../constants'
+import chalk from 'chalk'
 
 describe('Logger', () => {
   let transport: LoggerTransport
   const originalEnvVars = { ...process.env }
+
+  beforeAll(() => {
+    chalk.level = 0
+  })
 
   beforeEach(() => {
     transport = {
@@ -313,32 +318,6 @@ describe('Logger', () => {
       logger.process(mockTransportFn, LogLevel.ERROR, ['a message'])
 
       expect(mockTransportFn).toHaveBeenCalledWith('{"logLevel":"error","message":"a message"}')
-    })
-
-    it('should pass a colorized string to the transport when pretty option is true', () => {
-      const logger = new Logger({ transport, pretty: true })
-      const mockTransportFn = jest.fn()
-
-      logger.process(mockTransportFn, LogLevel.ERROR, ['a message'])
-
-      expect(mockTransportFn).toHaveBeenCalledTimes(1)
-      expect(mockTransportFn).toHaveBeenNthCalledWith(
-        1,
-        '\n\u001b[37m\u001b[41m        ERROR       \u001b[49m\u001b[39m - a message',
-      )
-    })
-
-    it('should not log the message or log level as data when pretty option is true', () => {
-      const logger = new Logger({ transport, pretty: true })
-      const mockTransportFn = jest.fn()
-
-      logger.process(mockTransportFn, LogLevel.ERROR, ['a message', 123])
-
-      expect(mockTransportFn).toHaveBeenCalledTimes(1)
-      expect(mockTransportFn).toHaveBeenCalledWith(
-        '\n\u001b[37m\u001b[41m        ERROR       \u001b[49m\u001b[39m - a message',
-        '\u001b[32m123\u001b[39m',
-      )
     })
 
     it("should set the message property to the first argument when it's a string", () => {

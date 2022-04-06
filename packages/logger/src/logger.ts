@@ -1,22 +1,42 @@
-import stringify from 'json-stringify-safe'
-import util from 'util'
-import { LogLevelNumber } from './constants'
-import { LoggerOptions, LoggerTransport, LogLevel } from './types'
+import { LOGGER_PRETTY, LogLevelNumber } from './constants'
+import { LoggerOptions, LoggerOutput, LoggerTransport, LogLevel } from './types'
 import { transformData } from './transform/transform'
+import { prettyOutput } from './output/pretty'
+import { unprettyOutput } from './output/unpretty'
 
 // An array of strings of valid log levels
 const validLogLeveLs = Object.values(LogLevel)
 
+function generateOutput(baseData: Record<string, any> | null, args: any[]): LoggerOutput {
+  const output: LoggerOutput = {}
+  let outputData = args
+  if (baseData) {
+    output.requestData = baseData
+  }
+  if (typeof outputData[0] === 'string') {
+    output.message = outputData[0]
+    outputData = outputData.slice(1)
+  }
+  if (outputData.length) {
+    output.data = transformData(outputData)
+  }
+  return output
+}
+
 export class Logger {
-  public baseData: any
+  public baseData: Record<string, any> | null
   public pretty: boolean
-  private readonly levelName: LogLevel
-  private readonly levelNumber: number
-  private transport: LoggerTransport
+  public readonly levelName: LogLevel
+  public readonly levelNumber: number
+  public readonly transport: LoggerTransport
 
   constructor(options?: LoggerOptions) {
-    this.baseData = options?.baseData || {}
-    this.pretty = process?.env?.LOGGER_PRETTY === '1'
+    this.baseData = options?.baseData ?? null
+    if (typeof options?.pretty === 'boolean') {
+      this.pretty = options.pretty
+    } else {
+      this.pretty = LOGGER_PRETTY
+    }
     if (options?.level && validLogLeveLs.includes(options.level)) {
       this.levelName = options.level
     } else {
@@ -32,58 +52,42 @@ export class Logger {
   }
 
   trace(...args: any[]) {
-    this.process(this.transport.debug, LogLevelNumber[LogLevel.TRACE], LogLevel.TRACE, args)
+    this.process(this.transport.trace, LogLevel.TRACE, args)
   }
 
   debug(...args: any[]) {
-    this.process(this.transport.debug, LogLevelNumber[LogLevel.DEBUG], LogLevel.DEBUG, args)
+    this.process(this.transport.debug, LogLevel.DEBUG, args)
   }
 
   info(...args: any[]) {
-    this.process(this.transport.info, LogLevelNumber[LogLevel.INFO], LogLevel.INFO, args)
+    this.process(this.transport.info, LogLevel.INFO, args)
   }
 
   warn(...args: any[]) {
-    this.process(this.transport.warn, LogLevelNumber[LogLevel.WARN], LogLevel.WARN, args)
+    this.process(this.transport.warn, LogLevel.WARN, args)
   }
 
   error(...args: any[]) {
-    this.process(this.transport.error, LogLevelNumber[LogLevel.ERROR], LogLevel.ERROR, args)
+    this.process(this.transport.error, LogLevel.ERROR, args)
   }
 
   text(input: string) {
     this.transport.debug(input)
   }
 
-  process(method: any, levelNumber: number, level: string, args: any[]) {
-    let data: any
+  process(method: (...args: any[]) => any, level: LogLevel, args: any[]) {
+    const levelNumber = LogLevelNumber[level]
+
     if (levelNumber < this.levelNumber || !Array.isArray(args) || args.length === 0) {
       return
     }
-    const output = { ...this.baseData, logLevel: level }
-    if (typeof args[0] === 'string') {
-      output.message = args[0]
-      data = args.slice(1)
-    } else {
-      data = args
-    }
 
-    output.data = transformData(data)
+    const output = generateOutput(this.baseData, args)
 
     if (this.pretty) {
-      method(
-        util.inspect(output, {
-          showHidden: false,
-          depth: null,
-          colors: true,
-          compact: false,
-          sorted: true,
-          maxStringLength: null,
-          maxArrayLength: null,
-        }),
-      )
+      prettyOutput(method, level, output)
     } else {
-      method(stringify(output))
+      unprettyOutput(method, level, output)
     }
   }
 }

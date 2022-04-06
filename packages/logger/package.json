@@ -26,12 +26,13 @@
   },
   "dependencies": {
     "@gradientedge/als": "workspace:^0.1.2",
+    "chalk": "^4.1.2",
     "json-stringify-safe": "^5.0.1",
     "lodash.clonedeep": "^4.5.0",
     "traverse": "^0.6.6"
   },
   "devDependencies": {
-    "@types/traverse": "^0.6.6",
-    "@types/lodash.clonedeep": "^4.5.0"
+    "@types/traverse": "^0.6.32",
+    "@types/lodash.clonedeep": "^4.5.6"
   }
 }

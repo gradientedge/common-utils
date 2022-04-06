@@ -14,8 +14,8 @@ export interface ExtendedErrorOptions {
  */
 export class ExtendedError extends Error {
   public readonly code: string | undefined
-  public data?: Record<string, any>
-  private readonly originalError: unknown
+  public readonly data?: Record<string, any>
+  public readonly originalError: unknown
 
   constructor(message: string, options?: ExtendedErrorOptions) {
     super(message)

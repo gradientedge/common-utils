@@ -1,7 +1,7 @@
 import { transformError } from './error'
 import { maskSensitiveData } from '../mask'
 
-export function transformData(data: any[]) {
+export function transformData(data: any[]): any {
   // Step 1 - filter out any fields we don't want
   //        - How are we going to avoid massive log output when someone tries
   //          to output a response object for example?
@@ -16,7 +16,7 @@ export function transformData(data: any[]) {
   if (data.length === 1) {
     transformedData = data[0]
   } else {
-    transformedData = undefined
+    transformedData = data
   }
   return maskSensitiveData(transformedData)
 }

@@ -16,6 +16,7 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/no-non-null-assertion': 'off',
+    'no-prototype-builtins': 'off',
     eqeqeq: 'error',
   },
   ignorePatterns: ['/common', '**/types/generated.*', 'dist'],

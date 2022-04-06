@@ -13,10 +13,16 @@ export interface LoggerOptions {
   transport?: LoggerTransport
 }
 
-export interface LoggerTransport {
-  trace: (...args: any) => void
-  debug: (...args: any) => void
-  info: (...args: any) => void
-  warn: (...args: any) => void
-  error: (...args: any) => void
+export interface LoggerTransportFn {
+  (...args: any[]): any
+}
+
+export type LoggerTransport = {
+  [key in LogLevel]: LoggerTransportFn
+}
+
+export interface LoggerOutput {
+  requestData?: Record<string, any>
+  message?: string
+  data?: any
 }

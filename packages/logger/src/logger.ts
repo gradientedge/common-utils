@@ -1,38 +1,41 @@
-import stringify from 'json-stringify-safe'
-import util from 'util'
-import { LogLevelNumber } from './constants'
-import { LoggerOptions, LoggerTransport, LogLevel } from './types'
+import { LOGGER_PRETTY, LogLevelNumber } from './constants'
+import { LoggerOptions, LoggerOutput, LoggerTransport, LogLevel } from './types'
 import { transformData } from './transform/transform'
-import chalk from 'chalk'
-
-const chalkLevelPrefix = {
-  [LogLevel.ERROR]: chalk.white.bgRed('        ERROR       '),
-  [LogLevel.WARN]: chalk.black.bgYellow('        WARN        '),
-  [LogLevel.INFO]: chalk.black.bgWhite('        INFO        '),
-  [LogLevel.DEBUG]: chalk.hex('#333333').bgGray('        DEBUG       '),
-  [LogLevel.TRACE]: chalk.blue.bgWhite('        TRACE       '),
-}
-
-function colorizedLevel(level: LogLevel) {
-  return chalkLevelPrefix[level]
-}
+import { prettyOutput } from './output/pretty'
+import { unprettyOutput } from './output/unpretty'
 
 // An array of strings of valid log levels
 const validLogLeveLs = Object.values(LogLevel)
 
+function generateOutput(baseData: Record<string, any> | null, args: any[]): LoggerOutput {
+  const output: LoggerOutput = {}
+  let outputData = args
+  if (baseData) {
+    output.requestData = baseData
+  }
+  if (typeof outputData[0] === 'string') {
+    output.message = outputData[0]
+    outputData = outputData.slice(1)
+  }
+  if (outputData.length) {
+    output.data = transformData(outputData)
+  }
+  return output
+}
+
 export class Logger {
-  public baseData: any
+  public baseData: Record<string, any> | null
   public pretty: boolean
   public readonly levelName: LogLevel
   public readonly levelNumber: number
   public readonly transport: LoggerTransport
 
   constructor(options?: LoggerOptions) {
-    this.baseData = options?.baseData || {}
+    this.baseData = options?.baseData ?? null
     if (typeof options?.pretty === 'boolean') {
       this.pretty = options.pretty
     } else {
-      this.pretty = process?.env?.LOGGER_PRETTY === '1'
+      this.pretty = LOGGER_PRETTY
     }
     if (options?.level && validLogLeveLs.includes(options.level)) {
       this.levelName = options.level
@@ -73,52 +76,18 @@ export class Logger {
   }
 
   process(method: (...args: any[]) => any, level: LogLevel, args: any[]) {
-    let data: any
     const levelNumber = LogLevelNumber[level]
+
     if (levelNumber < this.levelNumber || !Array.isArray(args) || args.length === 0) {
       return
     }
-    const output = { ...this.baseData, logLevel: level }
-    if (typeof args[0] === 'string') {
-      output.message = args[0]
-      data = args.slice(1)
-    } else {
-      data = args
-    }
 
-    if (data.length) {
-      output.data = transformData(data)
-    }
+    const output = generateOutput(this.baseData, args)
 
     if (this.pretty) {
-      const message = output.message
-      // eslint-disable-next-line no-prototype-builtins
-      if (output.hasOwnProperty('message')) {
-        delete output.message
-      }
-      delete output.logLevel
-      let outputData = true
-      const args = [`\n${colorizedLevel(level)} - ${message ?? '(no log message)'}`]
-      if (typeof output.data === 'string') {
-        args.push(chalk.green(output.data))
-        outputData = false
-      }
-      method(...args)
-      if (outputData && output.data !== undefined) {
-        method(
-          util.inspect(output.data, {
-            showHidden: false,
-            depth: null,
-            colors: true,
-            compact: false,
-            sorted: true,
-            maxStringLength: null,
-            maxArrayLength: null,
-          }),
-        )
-      }
+      prettyOutput(method, level, output)
     } else {
-      method(stringify(output))
+      unprettyOutput(method, level, output)
     }
   }
 }

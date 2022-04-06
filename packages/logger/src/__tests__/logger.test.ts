@@ -1,5 +1,6 @@
 import { Logger } from '../logger'
 import { LoggerTransport, LogLevel } from '../types'
+import * as constants from '../constants'
 
 describe('Logger', () => {
   let transport: LoggerTransport
@@ -13,6 +14,12 @@ describe('Logger', () => {
       trace: jest.fn(),
       warn: jest.fn(),
     }
+
+    Object.defineProperty(constants, 'LOGGER_PRETTY', { value: true })
+  })
+
+  afterEach(() => {
+    jest.resetAllMocks()
   })
 
   afterAll(() => {
@@ -20,15 +27,14 @@ describe('Logger', () => {
   })
 
   describe('constructor', () => {
-    it("should set the pretty flag to false when the LOGGER_PRETTY env var is not '1' and no pretty option passed in", () => {
-      process.env.LOGGER_PRETTY = '0'
+    it('should set the pretty flag to false when the LOGGER_PRETTY constant is false and no pretty option passed in', () => {
+      Object.defineProperty(constants, 'LOGGER_PRETTY', { value: false })
       const logger = new Logger({ transport })
 
       expect(logger.pretty).toBeFalse()
     })
 
-    it("should set the pretty flag to true when the LOGGER_PRETTY env var is '1' and no pretty option passed in", () => {
-      process.env.LOGGER_PRETTY = '1'
+    it('should set the pretty flag to true when the LOGGER_PRETTY constant is true and no pretty option passed in', () => {
       const logger = new Logger({ transport })
 
       expect(logger.pretty).toBeTrue()
@@ -328,12 +334,11 @@ describe('Logger', () => {
 
       logger.process(mockTransportFn, LogLevel.ERROR, ['a message', 123])
 
-      expect(mockTransportFn).toHaveBeenCalledTimes(2)
-      expect(mockTransportFn).toHaveBeenNthCalledWith(
-        1,
+      expect(mockTransportFn).toHaveBeenCalledTimes(1)
+      expect(mockTransportFn).toHaveBeenCalledWith(
         '\n\u001b[37m\u001b[41m        ERROR       \u001b[49m\u001b[39m - a message',
+        '\u001b[32m123\u001b[39m',
       )
-      expect(mockTransportFn).toHaveBeenNthCalledWith(2, '\u001b[33m123\u001b[39m')
     })
 
     it("should set the message property to the first argument when it's a string", () => {

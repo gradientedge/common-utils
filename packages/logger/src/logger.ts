@@ -47,7 +47,7 @@ export class Logger {
     if (options?.transport) {
       this.transport = options.transport
     } else {
-      this.transport = console
+      this.transport = { ...console, trace: console.debug }
     }
   }
 

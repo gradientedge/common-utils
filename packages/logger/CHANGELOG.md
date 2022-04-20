@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 0.3.0
+
+### Minor Changes
+
+- 31deb1f: Use console.debug instead of console.trace for trace level calls
+
 ## 0.2.0
 
 ### Minor Changes

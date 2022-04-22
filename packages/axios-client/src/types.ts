@@ -1,8 +1,8 @@
 import { AgentOptions } from 'https'
 
 export interface RequestConfig {
-  httpsAgent: AgentOptions
-  retry: RetryConfig
+  httpsAgent?: AgentOptions
+  retry?: RetryConfig
 }
 
 export interface RetryConfig {

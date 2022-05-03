@@ -7,5 +7,5 @@ export default {
   testMatch: ['**/__tests__/**/*.test.ts'],
   testPathIgnorePatterns: ['node_modules/', 'dist/'],
   setupFilesAfterEnv: ['jest-extended/all'],
-  projects: ['<rootDir>/packages/**/jest.config.ts'],
+  projects: ['<rootDir>/packages/*/jest.config.ts'],
 }

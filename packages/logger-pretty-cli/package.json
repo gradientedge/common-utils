@@ -1,12 +1,15 @@
 {
-  "name": "@gradientedge/logger",
-  "version": "0.3.0",
-  "description": "Request-context sensitive logger package",
+  "name": "@gradientedge/logger-pretty-cli",
+  "version": "0.0.0",
+  "description": "Pretty prints the output of the @gradientedge/logger package",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
   "homepage": "https://github.com/gradientedge/common-utils#readme",
   "license": "ISC",
   "main": "dist/index",
   "types": "dist/index",
+  "bin": {
+    "pretty-logs": "./bin.js"
+  },
   "files": [
     "dist",
     "!dist/**/__tests__"
@@ -17,7 +20,7 @@
   },
   "scripts": {
     "clean": "rimraf dist && rm -f tsconfig.tsbuildinfo",
-    "build": "tsc --build",
+    "build": "tsc",
     "build:watch": "tsc --build --incremental --watch",
     "test": "pnpm test --workspace --filter @gradientedge/common-utils"
   },
@@ -25,13 +28,11 @@
     "url": "https://github.com/gradientedge/common-utils/issues"
   },
   "dependencies": {
-    "@gradientedge/als": "workspace:^0.1.2",
-    "json-stringify-safe": "^5.0.1",
-    "lodash.clonedeep": "^4.5.0",
-    "traverse": "^0.6.6"
+    "@gradientedge/logger": "workspace:^0.3.0",
+    "chalk": "^4.1.2",
+    "split2": "^4.1.0"
   },
   "devDependencies": {
-    "@types/traverse": "^0.6.32",
-    "@types/lodash.clonedeep": "^4.5.6"
+    "@types/split2": "^3.2.1"
   }
 }

@@ -61,7 +61,7 @@ importers:
 
   packages/logger:
     specifiers:
-      '@gradientedge/als': workspace:^0.1.2
+      '@gradientedge/als': workspace:^0.2.0
       '@types/lodash.clonedeep': ^4.5.6
       '@types/traverse': ^0.6.32
       json-stringify-safe: ^5.0.1
@@ -78,7 +78,7 @@ importers:
 
   packages/logger-pretty-cli:
     specifiers:
-      '@gradientedge/logger': workspace:^0.3.0
+      '@gradientedge/logger': workspace:^1.0.0
       '@types/split2': ^3.2.1
       chalk: ^4.1.2
       split2: ^4.1.0

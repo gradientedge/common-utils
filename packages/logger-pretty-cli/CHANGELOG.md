@@ -1,5 +1,11 @@
 # @gradientedge/logger-pretty-cli
 
+## 0.2.0
+
+### Minor Changes
+
+- 78faf37: Additional line spacing
+
 ## 0.1.0
 
 ### Minor Changes

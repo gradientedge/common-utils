@@ -1,6 +1,6 @@
 {
   "name": "@gradientedge/als",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Small utility powered by `AsyncLocalStorage` that allows easy retrieval of request context data",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
   "homepage": "https://github.com/gradientedge/common-utils#readme",

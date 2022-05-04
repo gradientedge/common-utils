@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 0.3.0
+
+### Minor Changes
+
+- 887981b: Allow defaults to be set via environment variables
+
 ## 0.2.0
 
 ### Minor Changes

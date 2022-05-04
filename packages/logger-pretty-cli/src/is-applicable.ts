@@ -1,3 +1,3 @@
 export function isApplicable(jsonObject: any) {
-  return jsonObject.hasOwnProperty('level') && jsonObject.hasOwnProperty('data')
+  return Object.getOwnPropertyNames(jsonObject).every((name) => ['message', 'data', 'base', 'level'].includes(name))
 }

@@ -38,3 +38,21 @@ const client = getAxiosClient({
 
 The `client` variable above is an [AxiosInstance](https://github.com/axios/axios/blob/master/index.d.ts#L235) 
 which gives you access to all the standard axios methods and functionality. 
+
+## Default values via environment variables
+
+The following describes below the environment variables which are read in, and which
+configuration options they apply to if supplied.
+
+- `REQUEST_TIMEOUT_MS` => `RequestConfig.httpsAgent.timeout`
+- `REQUEST_MAX_SOCKETS` => `RequestConfig.httpsAgent.maxSockets`
+- `REQUEST_RETRY_MAX_RETRIES` => `RequestConfig.retry.maxRetries`
+- `REQUEST_RETRY_DELAY_MS` => `RequestConfig.retry.delayMs`
+
+If no values are specified for the config properties above, then the following
+fallback default values are used:
+
+- `RequestConfig.httpsAgent.timeout` => 5000
+- `RequestConfig.httpsAgent.maxSockets` => 20
+- `RequestConfig.retry.maxRetries` => 5
+- `RequestConfig.retry.delayMs` => 50

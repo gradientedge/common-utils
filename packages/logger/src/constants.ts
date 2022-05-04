@@ -1,11 +1,28 @@
-import { LogLevel } from './types'
+import { LoggerLevel, LoggerLevelValue } from './types'
 
-export const LogLevelNumber: Record<LogLevel, number> = {
-  [LogLevel.TRACE]: 10,
-  [LogLevel.DEBUG]: 20,
-  [LogLevel.INFO]: 30,
-  [LogLevel.WARN]: 40,
-  [LogLevel.ERROR]: 50,
+/**
+ * Numeric value associated with a specific log level
+ *
+ * This allows us to easily determine if a call to say the `info`
+ * method should result in any output, if the actual log level is
+ * say `error`.
+ */
+export const LogLevelNumber: Record<LoggerLevelValue, number> = {
+  [LoggerLevel.DEBUG]: 10,
+  [LoggerLevel.INFO]: 20,
+  [LoggerLevel.WARN]: 30,
+  [LoggerLevel.ERROR]: 40,
 }
 
-export const LOGGER_PRETTY = process?.env?.LOGGER_PRETTY === '1'
+/**
+ * The log level used by a new instance of {@see Logger} if none explicitly passed in
+ *
+ * Reads from the `LOGGER_LEVEL` env var, and defaults to {@see LoggerLevel.DEBUG} if not set
+ */
+export const DEFAULT_LOG_LEVEL = (
+  process?.env?.LOGGER_LEVEL && LoggerLevel.hasOwnProperty(process.env.LOGGER_LEVEL)
+    ? process.env.LOGGER_LEVEL
+    : LoggerLevel.DEBUG
+) as LoggerLevelValue
+
+export const VALID_LOGGER_LEVEL_VALUES = Object.values(LoggerLevel)

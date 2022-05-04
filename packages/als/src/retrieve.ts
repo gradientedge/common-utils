@@ -1,9 +1,9 @@
-import { contextLocalStorage } from './create'
+import { container } from './create'
 
 export function retrieve<T>(): T {
-  const requestContext = contextLocalStorage.getStore()
-  if (!requestContext) {
-    throw Error('Cannot retrieve the request context as local storage has not yet been set')
+  const store = container.getStore()
+  if (!store) {
+    throw Error('You must call the `create` function before retrieving the store data')
   }
-  return requestContext.data
+  return store.data
 }

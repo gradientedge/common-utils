@@ -64,19 +64,30 @@ importers:
       '@gradientedge/als': workspace:^0.1.2
       '@types/lodash.clonedeep': ^4.5.6
       '@types/traverse': ^0.6.32
-      chalk: ^4.1.2
       json-stringify-safe: ^5.0.1
       lodash.clonedeep: ^4.5.0
       traverse: ^0.6.6
     dependencies:
       '@gradientedge/als': link:../als
-      chalk: 4.1.2
       json-stringify-safe: 5.0.1
       lodash.clonedeep: 4.5.0
       traverse: 0.6.6
     devDependencies:
       '@types/lodash.clonedeep': 4.5.6
       '@types/traverse': 0.6.32
+
+  packages/logger-pretty-cli:
+    specifiers:
+      '@gradientedge/logger': workspace:^0.3.0
+      '@types/split2': ^3.2.1
+      chalk: ^4.1.2
+      split2: ^4.1.0
+    dependencies:
+      '@gradientedge/logger': link:../logger
+      chalk: 4.1.2
+      split2: 4.1.0
+    devDependencies:
+      '@types/split2': 3.2.1
 
 packages:
 
@@ -1043,6 +1054,12 @@ packages:
 
   /@types/semver/6.2.3:
     resolution: {integrity: sha512-KQf+QAMWKMrtBMsB8/24w53tEsxllMj6TuA80TT/5igJalLI/zm0L3oXRbIAl4Ohfc85gyHX/jhMwsVkmhLU4A==}
+    dev: true
+
+  /@types/split2/3.2.1:
+    resolution: {integrity: sha512-7uz3yU+LooBq4yNOzlZD9PU9/1Eu0rTD1MjQ6apOVEoHsPrMUrFw7W8XrvWtesm2vK67SBK9AyJcOXtMpl9bgQ==}
+    dependencies:
+      '@types/node': 17.0.23
     dev: true
 
   /@types/stack-utils/2.0.1:
@@ -3831,6 +3848,11 @@ packages:
     dependencies:
       through: 2.3.8
     dev: true
+
+  /split2/4.1.0:
+    resolution: {integrity: sha512-VBiJxFkxiXRlUIeyMQi8s4hgvKCSjtknJv/LVYbrgALPwf5zSKmEwV9Lst25AkvMDnvxODugjdl6KZgwKM1WYQ==}
+    engines: {node: '>= 10.x'}
+    dev: false
 
   /sprintf-js/1.0.3:
     resolution: {integrity: sha1-BOaSb2YolTVPPdAVIDYzuFcpfiw=}

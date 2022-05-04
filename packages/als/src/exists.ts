@@ -1,5 +1,5 @@
-import { contextLocalStorage } from './create'
+import { container } from './create'
 
 export function exists(): boolean {
-  return !!contextLocalStorage.getStore()
+  return !!container.getStore()
 }

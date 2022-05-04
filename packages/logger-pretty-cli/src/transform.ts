@@ -4,18 +4,19 @@ import { isApplicable } from './is-applicable'
 
 export class PrettifyTransform extends Transform {
   _transform(chunk: Buffer, encoding: string, callback: TransformCallback): void {
-    let jsonString = ''
+    let inputString = ''
 
     if (encoding !== 'buffer') {
-      callback(new Error(`Unknown encoding: ${encoding}`))
+      callback(null, chunk)
+      return
     }
 
-    jsonString = chunk.toString()
+    inputString = chunk.toString()
 
     try {
-      const jsonObject = JSON.parse(jsonString)
+      const jsonObject = JSON.parse(inputString)
       if (isApplicable(jsonObject)) {
-        callback(null, prettify(jsonObject) + '\n')
+        callback(null, prettify(jsonObject) + '\n\n')
         return
       }
     } catch (e) {
@@ -24,7 +25,7 @@ export class PrettifyTransform extends Transform {
       // chunk through to the callback without processing it.
     }
 
-    callback(null, chunk)
+    callback(null, inputString + '\n\n')
     return
   }
 }

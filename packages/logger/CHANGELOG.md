@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 1.1.0
+
+### Minor Changes
+
+- 0b1aa19: Bump dependencies
+
 ## 1.0.0
 
 ### Major Changes

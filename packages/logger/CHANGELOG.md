@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 1.2.0
+
+### Minor Changes
+
+- 397f8a4: Fix for setting the DEFAULT_LOG_LEVEL
+
 ## 1.1.0
 
 ### Minor Changes

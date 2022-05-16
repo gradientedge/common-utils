@@ -20,7 +20,7 @@ export const LogLevelNumber: Record<LoggerLevelValue, number> = {
  * Reads from the `LOGGER_LEVEL` env var, and defaults to {@see LoggerLevel.DEBUG} if not set
  */
 export const DEFAULT_LOG_LEVEL = (
-  process?.env?.LOGGER_LEVEL && LoggerLevel.hasOwnProperty(process.env.LOGGER_LEVEL)
+  process?.env?.LOGGER_LEVEL && Object.values<string>(LoggerLevel).includes(process.env.LOGGER_LEVEL)
     ? process.env.LOGGER_LEVEL
     : LoggerLevel.DEBUG
 ) as LoggerLevelValue

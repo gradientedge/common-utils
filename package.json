@@ -1,11 +1,11 @@
 {
   "scripts": {
-    "clean": "pnpm clean --recursive",
+    "clean": "pnpm -r clean",
     "lint": "eslint \"**/*.ts\" --max-warnings=0",
     "prettier": "prettier --check \"**/*.{ts,js,json}\"",
     "prettify": "prettier --write \"**/*.{ts,js,json}\"",
     "test": "jest --config=jest.config.ts",
-    "build": "pnpm clean && pnpm build --recursive",
+    "build": "pnpm clean && pnpm -r build",
     "build:watch": "tsc --build --incremental --watch",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "husky install",

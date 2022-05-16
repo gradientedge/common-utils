@@ -31,7 +31,8 @@
     "traverse": "^0.6.6"
   },
   "devDependencies": {
-    "@types/traverse": "^0.6.32",
-    "@types/lodash.clonedeep": "^4.5.7"
+    "@types/json-stringify-safe": "^5.0.0",
+    "@types/lodash.clonedeep": "^4.5.7",
+    "@types/traverse": "^0.6.32"
   }
 }

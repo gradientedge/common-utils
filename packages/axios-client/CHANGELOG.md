@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.1.0
+
+### Minor Changes
+
+- 337659a: Transform function for axios response/error objects
+
 ## 1.0.0
 
 ### Major Changes

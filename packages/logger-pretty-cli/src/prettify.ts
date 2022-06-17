@@ -23,6 +23,9 @@ export function prettify(data: LoggerOutput): string {
     line1 = `${line1}: ${chalk.green(data.data)}`
     delete output.data
   }
+  if (!output.base?.getOwnPropertyNames()?.length) {
+    delete output.base
+  }
   lines.push(line1)
   if (output.data !== undefined || output.base) {
     lines.push(

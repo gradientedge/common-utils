@@ -1,5 +1,11 @@
 # @gradientedge/logger-pretty-cli
 
+## 0.4.0
+
+### Minor Changes
+
+- dd9355d: Avoid prettifying non-plain objects
+
 ## 0.3.0
 
 ### Minor Changes

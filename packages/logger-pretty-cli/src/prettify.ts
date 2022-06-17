@@ -1,6 +1,7 @@
 import { LoggerLevel, LoggerOutput } from '@gradientedge/logger'
 import chalk from 'chalk'
 import util from 'util'
+import { isPlainObject } from 'is-plain-object'
 
 export const chalkLevelPrefix = {
   [LoggerLevel.ERROR]: chalk.white.bgRed('        ERROR       '),
@@ -23,7 +24,7 @@ export function prettify(data: LoggerOutput): string {
     line1 = `${line1}: ${chalk.green(data.data)}`
     delete output.data
   }
-  if (!output.base?.getOwnPropertyNames()?.length) {
+  if (isPlainObject(output.base) && !Object.getOwnPropertyNames(output.base).length) {
     delete output.base
   }
   lines.push(line1)

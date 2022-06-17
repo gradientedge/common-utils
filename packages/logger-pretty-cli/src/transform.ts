@@ -16,7 +16,7 @@ export class PrettifyTransform extends Transform {
     try {
       const jsonObject = JSON.parse(inputString)
       if (isApplicable(jsonObject)) {
-        callback(null, prettify(jsonObject) + '\n\n')
+        callback(null, '\n\n' + prettify(jsonObject))
         return
       }
     } catch (e) {
@@ -25,7 +25,7 @@ export class PrettifyTransform extends Transform {
       // chunk through to the callback without processing it.
     }
 
-    callback(null, inputString + '\n\n')
+    callback(null, '\n' + inputString)
     return
   }
 }

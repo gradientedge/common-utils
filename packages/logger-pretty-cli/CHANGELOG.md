@@ -1,5 +1,11 @@
 # @gradientedge/logger-pretty-cli
 
+## 0.5.0
+
+### Minor Changes
+
+- 9f88b51: Fix error when getting base data property names list
+
 ## 0.4.0
 
 ### Minor Changes

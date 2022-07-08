@@ -1,6 +1,6 @@
 {
   "name": "@gradientedge/single-promise",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Ensures that only a single promise/request is made while waiting for the original request to complete",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
   "homepage": "https://github.com/gradientedge/common-utils#readme",

@@ -18,6 +18,7 @@ module.exports = {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'no-prototype-builtins': 'off',
     eqeqeq: 'error',
+    'no-async-promise-executor': 'off',
   },
   ignorePatterns: ['/common', '**/types/generated.*', 'dist'],
 }

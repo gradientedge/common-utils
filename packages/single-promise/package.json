@@ -1,0 +1,29 @@
+{
+  "name": "@gradientedge/single-promise",
+  "version": "0.0.0",
+  "description": "Ensures that only a single promise/request is made while waiting for the original request to complete",
+  "author": "Jimmy Thomson <jimmy@gradientedge.com>",
+  "homepage": "https://github.com/gradientedge/common-utils#readme",
+  "license": "ISC",
+  "main": "dist/index",
+  "types": "dist/index",
+  "files": [
+    "dist",
+    "!dist/**/__tests__"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gradientedge/common-utils.git"
+  },
+  "scripts": {
+    "clean": "rimraf dist && rm -f tsconfig.tsbuildinfo",
+    "build": "tsc --build",
+    "build:watch": "tsc --build --incremental --watch",
+    "test": "pnpm test --workspace --filter @gradientedge/common-utils"
+  },
+  "bugs": {
+    "url": "https://github.com/gradientedge/common-utils/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

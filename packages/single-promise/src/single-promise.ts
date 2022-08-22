@@ -15,7 +15,7 @@ export function singlePromise<T = any>(options: SinglePromiseParams<T>) {
         reject(e)
       }
     })
-    promiseKeys[options.key]!.then(() => {
+    promiseKeys[options.key] = promiseKeys[options.key]!.finally(() => {
       delete promiseKeys[options.key]
     })
   }

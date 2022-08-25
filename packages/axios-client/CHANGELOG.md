@@ -4,7 +4,7 @@
 
 ### Patch Changes
 
-- 0b2f3b7: Ensure that when a 429 response status is received that the request is retried.
+- 0b2f3b7: Add configuration option to specify requests should be retried when selected response status codes are received.
 
 ## 1.1.0
 

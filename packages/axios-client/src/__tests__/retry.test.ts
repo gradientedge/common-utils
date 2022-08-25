@@ -1,5 +1,6 @@
 import nock from 'nock'
 import { getAxiosClient } from '../index'
+import { DEFAULT_RETRY_DELAY_MS, DEFAULT_RETRY_MAX_RETRIES } from '../constants'
 
 describe('retryOn429', () => {
   beforeAll(() => {
@@ -12,7 +13,13 @@ describe('retryOn429', () => {
     const request1 = nock(url).get(resource).reply(429, '')
     const request2 = nock(url).get(resource).reply(429, '')
     const request3 = nock(url).get(resource).reply(200, 'Content')
-    const client = getAxiosClient()
+    const client = getAxiosClient({
+      retry: {
+        delayMs: DEFAULT_RETRY_DELAY_MS,
+        maxRetries: DEFAULT_RETRY_MAX_RETRIES,
+        retryStatusCodes: [429],
+      },
+    })
 
     await client.get(`${url}${resource}`)
 

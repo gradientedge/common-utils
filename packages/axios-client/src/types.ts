@@ -8,4 +8,5 @@ export interface RequestConfig {
 export interface RetryConfig {
   maxRetries: number
   delayMs: number
+  retryStatusCodes: number[]
 }

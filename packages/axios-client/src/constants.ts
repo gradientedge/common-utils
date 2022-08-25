@@ -46,6 +46,7 @@ export const DEFAULT_RETRY_DELAY_MS = defaultRetryDelayMs
 export const DEFAULT_RETRY_CONFIG: RetryConfig = {
   delayMs: DEFAULT_RETRY_DELAY_MS,
   maxRetries: DEFAULT_RETRY_MAX_RETRIES,
+  retryStatusCodes: [],
 }
 
 /**

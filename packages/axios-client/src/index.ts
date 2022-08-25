@@ -27,7 +27,7 @@ export function getAxiosClient(options?: RequestConfig) {
       retryCondition: function (error: AxiosError) {
         // The error code for a timeout is ECONNABORTED. Default axios-retry
         // behaviour doesn't consider timeouts 'retryable'.
-        return isRequestRetryable(error)
+        return isRequestRetryable(error, options?.retry?.retryStatusCodes ?? [])
       },
     })
   }
@@ -44,8 +44,12 @@ export function getCalculateRetryDelayFn(delayMs: number) {
   }
 }
 
-export function isRequestRetryable(error: AxiosError) {
-  return isNetworkOrIdempotentRequestError(error) || (!error.response && error.code === 'ECONNABORTED')
+export function isRequestRetryable(error: AxiosError, retryStatusCodes: number[]) {
+  return (
+    isNetworkOrIdempotentRequestError(error) ||
+    (!error.response && error.code === 'ECONNABORTED') ||
+    retryStatusCodes.includes(error.response?.status ?? 0)
+  )
 }
 
 export * from './transform'

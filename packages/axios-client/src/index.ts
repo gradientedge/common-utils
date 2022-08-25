@@ -45,7 +45,11 @@ export function getCalculateRetryDelayFn(delayMs: number) {
 }
 
 export function isRequestRetryable(error: AxiosError) {
-  return isNetworkOrIdempotentRequestError(error) || (!error.response && error.code === 'ECONNABORTED')
+  return (
+    isNetworkOrIdempotentRequestError(error) ||
+    (!error.response && error.code === 'ECONNABORTED') ||
+    error.response?.status === 429
+  )
 }
 
 export * from './transform'

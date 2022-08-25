@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.1.1
+
+### Patch Changes
+
+- 0b2f3b7: Ensure that when a 429 response status is received that the request is retried.
+
 ## 1.1.0
 
 ### Minor Changes

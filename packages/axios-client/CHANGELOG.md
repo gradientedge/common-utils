@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.1.1
+
+### Patch Changes
+
+- 0b2f3b7: Add configuration option to specify requests should be retried when selected response status codes are received.
+
 ## 1.1.0
 
 ### Minor Changes

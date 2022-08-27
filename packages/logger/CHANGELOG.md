@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 1.3.0
+
+### Minor Changes
+
+- 28c7982: Expose response properties when outputting Axios error
+
 ## 1.2.0
 
 ### Minor Changes

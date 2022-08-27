@@ -31,18 +31,31 @@ export function transformError(error: Error & Record<string, any>, recursionLeve
  * the HttpsAgent is a huge deeply nested object.
  */
 export function pickAxiosErrorFields(error: any) {
-  return {
-    message: error?.message,
-    name: error?.name,
-    code: error?.code,
-    stack: error?.stack,
-    config: {
+  let config: any
+  let response: any
+  if (error?.config) {
+    config = {
       url: error?.config?.url,
       method: error?.config?.method,
       headers: error?.config?.headers,
       timeout: error?.config?.timeout,
       params: error?.config?.params,
-    },
+    }
+  }
+  if (error?.response) {
+    response = {
+      status: error?.response?.status,
+      headers: error?.response?.headers,
+      data: error?.response?.data,
+    }
+  }
+  return {
+    message: error?.message,
+    name: error?.name,
+    code: error?.code,
+    stack: error?.stack,
+    config,
+    response,
   }
 }
 

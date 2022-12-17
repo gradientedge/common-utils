@@ -22,7 +22,7 @@ export function getAxiosClient(options?: RequestConfig) {
   if (retry.maxRetries) {
     axiosRetry(client, {
       retries: retry.maxRetries,
-      retryDelay: getCalculateRetryDelayFn(retry.delayMs),
+      retryDelay: options?.retry?.calculateRetryDelayFn ?? getCalculateRetryDelayFn(retry.delayMs),
       shouldResetTimeout: true,
       retryCondition: function (error: AxiosError) {
         // The error code for a timeout is ECONNABORTED. Default axios-retry
@@ -35,20 +35,18 @@ export function getAxiosClient(options?: RequestConfig) {
   return client
 }
 
-export function getCalculateRetryDelayFn(delayMs: number) {
-  return (retryCount: number) => {
-    if (retryCount === 0) {
-      return 0
-    }
-    return delayMs * 2 ** (retryCount - 1)
-  }
-}
+/**
+ * Default function for calculating the delay between a request failure and the next retry.
+ */
+export const getCalculateRetryDelayFn = (delayMs: number) => (retryCount: number) => delayMs * 2 ** (retryCount - 1)
 
+/**
+ * Default implementation for determining whether a request is retryable
+ */
 export function isRequestRetryable(error: AxiosError, retryStatusCodes: number[]) {
   return (
     isNetworkOrIdempotentRequestError(error) ||
-    (!error.response && error.code === 'ECONNABORTED') ||
-    retryStatusCodes.includes(error.response?.status ?? 0)
+    (error.code !== 'ECONNABORTED' && retryStatusCodes.includes(error?.response?.status ?? 0))
   )
 }
 

@@ -1,5 +1,11 @@
 # @gradientedge/error
 
+## 0.3.0
+
+### Minor Changes
+
+- 3f43f25: Add logLevel option to the ExtendedError class
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,4 +1,4 @@
-export type LoggerLevelValue = typeof LoggerLevel[keyof typeof LoggerLevel]
+export type LoggerLevelValue = (typeof LoggerLevel)[keyof typeof LoggerLevel]
 
 /**
  * Log level constants

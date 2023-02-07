@@ -1,5 +1,15 @@
 # @gradientedge/error
 
+## 0.4.0
+
+### Minor Changes
+
+- 2986786: Added toJSON function to ExtendedError
+
+### Patch Changes
+
+- cdb6096: Bumped dependencies
+
 ## 0.3.0
 
 ### Minor Changes

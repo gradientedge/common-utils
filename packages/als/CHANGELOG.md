@@ -1,5 +1,11 @@
 # @gradientedge/als
 
+## 0.2.1
+
+### Patch Changes
+
+- cdb6096: Bumped dependencies
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,15 @@
 # @gradientedge/logger
 
+## 2.0.0
+
+### Major Changes
+
+- b4c5635: Removed async local storage mechanism from logger
+
+### Patch Changes
+
+- cdb6096: Bumped dependencies
+
 ## 1.3.0
 
 ### Minor Changes

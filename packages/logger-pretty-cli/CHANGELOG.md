@@ -1,5 +1,13 @@
 # @gradientedge/logger-pretty-cli
 
+## 0.5.1
+
+### Patch Changes
+
+- Updated dependencies [b4c5635]
+- Updated dependencies [cdb6096]
+  - @gradientedge/logger@2.0.0
+
 ## 0.5.0
 
 ### Minor Changes

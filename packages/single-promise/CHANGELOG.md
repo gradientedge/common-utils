@@ -1,5 +1,11 @@
 # @gradientedge/single-promise
 
+## 1.0.2
+
+### Patch Changes
+
+- cdb6096: Bumped dependencies
+
 ## 1.0.1
 
 ### Patch Changes

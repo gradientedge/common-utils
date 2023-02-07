@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.1.2
+
+### Patch Changes
+
+- cdb6096: Bumped dependencies
+
 ## 1.1.1
 
 ### Patch Changes

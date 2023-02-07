@@ -1,3 +1,5 @@
+import { ExtendedErrorLogLevel } from './types'
+
 /**
  * Options for the {@see ExtendedError} constructor
  */
@@ -29,7 +31,7 @@ export interface ExtendedErrorOptions {
    * message. This property allows you to suggest to the
    * catching caught, how the exception should be logged.
    */
-  logLevel?: 'trace' | 'debug' | 'info' | 'warn' | 'error' | string
+  logLevel?: ExtendedErrorLogLevel
 }
 
 /**
@@ -39,6 +41,7 @@ export interface ExtendedErrorOptions {
  */
 export class ExtendedError extends Error {
   public readonly code: string | undefined
+  public readonly logLevel?: ExtendedErrorLogLevel
   public readonly data?: Record<string, any>
   public readonly originalError: unknown
 
@@ -46,6 +49,16 @@ export class ExtendedError extends Error {
     super(message)
     this.code = options?.code
     this.data = options?.data
+    this.logLevel = options?.logLevel
     this.originalError = options?.originalError
+  }
+
+  toJSON() {
+    return {
+      message: this.message,
+      code: this.code,
+      data: this.data,
+      logLevel: this.logLevel,
+    }
   }
 }

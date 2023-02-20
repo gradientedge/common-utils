@@ -3,6 +3,7 @@ import axios, { AxiosError } from 'axios'
 import axiosRetry, { isNetworkOrIdempotentRequestError } from 'axios-retry'
 import { RequestConfig } from './types'
 import { DEFAULT_AGENT_CONFIG, DEFAULT_RETRY_CONFIG } from './constants'
+import { applyLoggerInterceptor } from './logger'
 
 /**
  * Get an axios instance configured with the given retry mechanism
@@ -18,6 +19,10 @@ export function getAxiosClient(options?: RequestConfig) {
     httpsAgent,
     timeout: httpsAgent.options.timeout,
   })
+
+  if (options?.logFn) {
+    applyLoggerInterceptor(client, options.logFn)
+  }
 
   if (retry.maxRetries) {
     axiosRetry(client, {

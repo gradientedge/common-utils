@@ -37,7 +37,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
           data: error.response?.data,
         },
       })
-      return error
+      return Promise.reject(error)
     },
   )
 }

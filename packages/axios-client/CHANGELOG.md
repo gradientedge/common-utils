@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.2.0
+
+### Minor Changes
+
+- 842707d: Added logFn option to getAxiosClient
+
 ## 1.1.2
 
 ### Patch Changes

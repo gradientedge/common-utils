@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.4.0
+
+### Minor Changes
+
+- 7e78f18: Fix for axios-client logger
+
 ## 1.3.0
 
 ### Minor Changes

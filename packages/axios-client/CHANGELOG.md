@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.5.0
+
+### Minor Changes
+
+- e055f99: Add X-Retry-Count header to retried requests
+
 ## 1.4.0
 
 ### Minor Changes

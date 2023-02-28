@@ -34,6 +34,10 @@ export function getAxiosClient(options?: RequestConfig) {
         // behaviour doesn't consider timeouts 'retryable'.
         return isRequestRetryable(error, options?.retry?.retryStatusCodes ?? [])
       },
+      onRetry: (retryCount, error, requestConfig) => {
+        requestConfig.headers ??= {}
+        requestConfig.headers['X-Retry-Count'] = retryCount
+      },
     })
   }
 

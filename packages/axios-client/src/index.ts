@@ -10,7 +10,7 @@ import { applyLoggerInterceptor } from './logger'
  * and custom agent for socket re-use.
  */
 export function getAxiosClient(options?: RequestConfig) {
-  const retry = options?.retry || DEFAULT_RETRY_CONFIG
+  const retry = { ...DEFAULT_RETRY_CONFIG, ...options?.retry }
   const httpsAgent = new HttpsAgent({
     ...DEFAULT_AGENT_CONFIG,
     ...options?.httpsAgent,

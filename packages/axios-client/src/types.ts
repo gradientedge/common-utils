@@ -2,7 +2,7 @@ import { AgentOptions } from 'https'
 
 export interface RequestConfig {
   httpsAgent?: AgentOptions
-  retry?: RetryConfig
+  retry?: Partial<RetryConfig>
   logFn?: Logger
 }
 

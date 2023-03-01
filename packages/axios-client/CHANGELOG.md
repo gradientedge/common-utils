@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.6.0
+
+### Minor Changes
+
+- 439621d: Fix for missing headers in params to logFn function
+
 ## 1.5.0
 
 ### Minor Changes

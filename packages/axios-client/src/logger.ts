@@ -9,7 +9,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
           url: response.config?.url ?? '',
           method: response.config?.method as string,
           params: response.config?.params,
-          headers: response.request?.headers,
+          headers: response.config?.headers,
           data: response.config?.data,
         },
         response: {
@@ -26,7 +26,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
           url: error.config?.url ?? '',
           method: error.config?.method as string,
           params: error.config?.params,
-          headers: error.request?.headers,
+          headers: error.config?.headers,
           data: error.config?.data,
         },
         response: {

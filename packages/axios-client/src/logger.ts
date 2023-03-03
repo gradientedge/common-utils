@@ -1,5 +1,6 @@
 import { AxiosError, AxiosInstance } from 'axios'
 import { Logger } from './types'
+import { extractAxiosHeaders } from './extract-headers'
 
 export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
   instance.interceptors.response.use(
@@ -14,7 +15,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
         },
         response: {
           status: response.status,
-          headers: response.headers,
+          headers: extractAxiosHeaders(response.headers),
           data: response.data,
         },
       })
@@ -33,7 +34,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
           code: error.code,
           message: !error.response?.status ? error.message : undefined,
           status: error.response?.status,
-          headers: error.response?.headers,
+          headers: extractAxiosHeaders(error.response?.headers),
           data: error.response?.data,
         },
       })

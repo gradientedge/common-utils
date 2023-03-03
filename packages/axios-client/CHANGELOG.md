@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.7.0
+
+### Minor Changes
+
+- be76afe: Upgrade axios package
+
 ## 1.6.0
 
 ### Minor Changes

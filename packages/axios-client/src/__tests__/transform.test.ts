@@ -21,8 +21,9 @@ describe('transformAxiosResponseForLogger', () => {
     expect(result).toEqual({
       request: {
         headers: {
-          Accept: 'application/json',
-          'User-Agent': 'mock-user-agent',
+          accept: 'application/json',
+          'accept-encoding': 'gzip, compress, deflate, br',
+          'user-agent': 'mock-user-agent',
         },
         method: 'get',
         url: 'http://localhost/test',
@@ -60,10 +61,11 @@ describe('transformAxiosResponseForLogger', () => {
           item1: 'test',
         },
         headers: {
-          Accept: 'application/json',
-          'Content-Length': 16,
-          'Content-Type': 'application/json',
-          'User-Agent': 'mock-user-agent',
+          accept: 'application/json',
+          'accept-encoding': 'gzip, compress, deflate, br',
+          'content-length': '16',
+          'content-type': 'application/json',
+          'user-agent': 'mock-user-agent',
         },
         method: 'post',
         url: 'http://localhost/test',

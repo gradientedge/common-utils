@@ -61,3 +61,4 @@ export function isRequestRetryable(error: AxiosError, retryStatusCodes: number[]
 
 export * from './transform'
 export { Logger, LoggerParams } from './types'
+export { AxiosError, AxiosResponse } from 'axios'

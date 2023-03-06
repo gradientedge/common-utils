@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+
 import { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import { Logger } from './types'
 import { extractAxiosHeaders } from './extract-headers'
 
 export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
   instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     config.__startTime = Date.now()
     return config

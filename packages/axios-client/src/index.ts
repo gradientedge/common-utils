@@ -18,6 +18,9 @@ export function getAxiosClient(options?: RequestConfig) {
   const client = axios.create({
     httpsAgent,
     timeout: httpsAgent.options.timeout,
+    transitional: {
+      clarifyTimeoutError: true,
+    },
   })
 
   if (options?.logFn) {
@@ -55,6 +58,7 @@ export const getCalculateRetryDelayFn = (delayMs: number) => (retryCount: number
 export function isRequestRetryable(error: AxiosError, retryStatusCodes: number[]) {
   return (
     isNetworkOrIdempotentRequestError(error) ||
+    error.code === 'ETIMEDOUT' ||
     (error.code !== 'ECONNABORTED' && retryStatusCodes.includes(error?.response?.status ?? 0))
   )
 }

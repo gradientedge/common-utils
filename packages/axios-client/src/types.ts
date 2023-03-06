@@ -40,5 +40,6 @@ export interface LoggerParams {
     status?: number
     headers?: Record<string, string | number | boolean>
     data?: any
+    elapsedTimeMs: number
   }
 }

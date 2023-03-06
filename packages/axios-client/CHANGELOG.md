@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.9.0
+
+### Minor Changes
+
+- b545332: Ensure we retry on a timeout
+
 ## 1.8.0
 
 ### Minor Changes

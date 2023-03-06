@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.8.0
+
+### Minor Changes
+
+- 8c683aa: Add elapsedTimeMs property to log response object
+
 ## 1.7.0
 
 ### Minor Changes

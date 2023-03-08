@@ -14,6 +14,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
     (response) => {
       logFn({
         request: {
+          baseUrl: response.config?.baseURL,
           url: response.config?.url ?? '',
           method: response.config?.method as string,
           params: response.config?.params,
@@ -34,6 +35,7 @@ export function applyLoggerInterceptor(instance: AxiosInstance, logFn: Logger) {
     (error: AxiosError) => {
       logFn({
         request: {
+          baseUrl: error.config?.baseURL,
           url: error.config?.url ?? '',
           method: error.config?.method as string,
           params: error.config?.params,

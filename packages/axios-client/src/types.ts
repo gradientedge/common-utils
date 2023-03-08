@@ -28,6 +28,7 @@ export interface Logger {
  */
 export interface LoggerParams {
   request: {
+    baseUrl?: string | undefined
     url: string
     method: string
     params?: Record<string, string | number | boolean>

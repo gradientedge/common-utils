@@ -56,6 +56,38 @@ describe('getAxiosClient', function () {
     expect(logFn.mock.calls[0][0].response.elapsedTimeMs).toBeGreaterThanOrEqual(200)
   })
 
+  it('should pass the `elapsedTimeMs` property in the response object when an error status is returned', async () => {
+    const url = 'https://localhost'
+    const resource = '/test'
+    const scope = nock(url).get(resource).reply(401, 'Content')
+    const logFn = jest.fn()
+    const client = getAxiosClient({ logFn })
+
+    await expect(client.get(`${url}${resource}`)).rejects.toThrow('Request failed with status code 401')
+
+    expect(scope.isDone()).toBeTrue()
+    expect(logFn).toHaveBeenCalledTimes(1)
+    expect(logFn).toHaveBeenCalledWith({
+      request: {
+        headers: {
+          accept: 'application/json, text/plain, */*',
+          'accept-encoding': 'gzip, compress, deflate, br',
+          'user-agent': 'axios/1.3.4',
+        },
+        method: 'get',
+        url: 'https://localhost/test',
+        params: undefined,
+        data: undefined,
+      },
+      response: {
+        code: 'ERR_BAD_REQUEST',
+        elapsedTimeMs: expect.any(Number),
+        status: 401,
+        data: 'Content',
+      },
+    })
+  })
+
   it('should pass a value greater than the timeout to the `elapsedTimeMs` property in the response object to log function if we get a timeout', async () => {
     const url = 'https://localhost'
     const resource = '/test'

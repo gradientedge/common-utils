@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.10.0
+
+### Minor Changes
+
+- 36dc0ab: Add baseUrl to axios logger
+
 ## 1.9.0
 
 ### Minor Changes

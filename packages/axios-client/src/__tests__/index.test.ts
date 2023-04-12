@@ -39,7 +39,7 @@ describe('getAxiosClient', function () {
         headers: {
           accept: 'application/json, text/plain, */*',
           'accept-encoding': 'gzip, compress, deflate, br',
-          'user-agent': 'axios/1.3.4',
+          'user-agent': expect.any(String),
         },
         method: 'get',
         url: 'https://localhost/test',
@@ -72,7 +72,7 @@ describe('getAxiosClient', function () {
         headers: {
           accept: 'application/json, text/plain, */*',
           'accept-encoding': 'gzip, compress, deflate, br',
-          'user-agent': 'axios/1.3.4',
+          'user-agent': expect.any(String),
         },
         method: 'get',
         url: 'https://localhost/test',
@@ -104,7 +104,7 @@ describe('getAxiosClient', function () {
         headers: {
           accept: 'application/json, text/plain, */*',
           'accept-encoding': 'gzip, compress, deflate, br',
-          'user-agent': 'axios/1.3.4',
+          'user-agent': expect.any(String),
         },
         method: 'get',
         url: 'https://localhost/test',
@@ -136,7 +136,7 @@ describe('getAxiosClient', function () {
         headers: {
           accept: 'application/json, text/plain, */*',
           'accept-encoding': 'gzip, compress, deflate, br',
-          'user-agent': 'axios/1.3.4',
+          'user-agent': expect.any(String),
         },
         method: 'get',
         url: 'https://localhost/test',
@@ -154,7 +154,7 @@ describe('getAxiosClient', function () {
         headers: {
           accept: 'application/json, text/plain, */*',
           'accept-encoding': 'gzip, compress, deflate, br',
-          'user-agent': 'axios/1.3.4',
+          'user-agent': expect.any(String),
           'x-retry-count': '1',
         },
         method: 'get',

@@ -67,7 +67,7 @@ export const DEFAULT_TIMEOUT_MS = defaultTimeoutMs
  * if no specific value is passed in for the {@see HttpsOptions.maxSockets}
  * property.
  */
-export const DEFAULT_MAX_SOCKETS = defaultTimeoutMs
+export const DEFAULT_MAX_SOCKETS = defaultMaxSockets
 
 /**
  * Default https agent configuration

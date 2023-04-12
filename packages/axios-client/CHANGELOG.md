@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.11.0
+
+### Minor Changes
+
+- e28488e: Bump axios-client dependencies
+
 ## 1.10.0
 
 ### Minor Changes

@@ -1,5 +1,11 @@
 # @gradientedge/logger-pretty-cli
 
+## 0.6.0
+
+### Minor Changes
+
+- a324ade: Bump dependencies
+
 ## 0.5.1
 
 ### Patch Changes

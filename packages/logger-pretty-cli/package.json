@@ -29,11 +29,11 @@
   },
   "dependencies": {
     "@gradientedge/logger": "workspace:^2.0.0",
-    "chalk": "^4.1.2",
-    "split2": "^4.1.0",
+    "chalk": "^5.2.0",
+    "split2": "^4.2.0",
     "is-plain-object": "^5.0.0"
   },
   "devDependencies": {
-    "@types/split2": "^3.2.1"
+    "@types/split2": "^4.2.0"
   }
 }

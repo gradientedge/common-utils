@@ -1,6 +1,6 @@
 {
   "name": "@gradientedge/logger-pretty-cli",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Pretty prints the output of the @gradientedge/logger package",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
   "homepage": "https://github.com/gradientedge/common-utils#readme",

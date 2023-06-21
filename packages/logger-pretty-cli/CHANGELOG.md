@@ -1,5 +1,11 @@
 # @gradientedge/logger-pretty-cli
 
+## 0.7.0
+
+### Minor Changes
+
+- ee37901: Revert dependency bump for chalk
+
 ## 0.6.0
 
 ### Minor Changes

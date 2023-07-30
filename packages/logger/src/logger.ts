@@ -2,6 +2,7 @@ import { DEFAULT_LOG_LEVEL, LogLevelNumber, VALID_LOGGER_LEVEL_VALUES } from './
 import { LoggerOptions, LoggerTransport, LoggerLevelValue } from './types'
 import { generateOutput } from './output'
 import stringify from 'json-stringify-safe'
+import { Console } from 'node:console'
 
 export class Logger {
   public baseData: Record<string, any> | null
@@ -22,7 +23,10 @@ export class Logger {
     if (options?.transport) {
       this.transport = options.transport
     } else {
-      this.transport = { ...console }
+      this.transport = new Console({
+        stdout: process.stdout,
+        stderr: process.stderr,
+      })
     }
   }
 

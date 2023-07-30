@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 3.0.0
+
+### Major Changes
+
+- e197c7c: Use the Console class as default for the logger transport
+
 ## 2.0.0
 
 ### Major Changes

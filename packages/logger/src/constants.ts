@@ -17,12 +17,16 @@ export const LogLevelNumber: Record<LoggerLevelValue, number> = {
 /**
  * The log level used by a new instance of {@see Logger} if none explicitly passed in
  *
- * Reads from the `LOGGER_LEVEL` env var, and defaults to {@see LoggerLevel.DEBUG} if not set
+ * Reads from the `LOGGER_LEVEL` env var, then the `LOG_LEVEL` env var, and then
+ * defaults to {@see LoggerLevel.DEBUG} if not set.
  */
-export const DEFAULT_LOG_LEVEL = (
-  process?.env?.LOGGER_LEVEL && Object.values<string>(LoggerLevel).includes(process.env.LOGGER_LEVEL)
-    ? process.env.LOGGER_LEVEL
-    : LoggerLevel.DEBUG
-) as LoggerLevelValue
+let logLevel: LoggerLevelValue = LoggerLevel.DEBUG
+if (process?.env?.LOGGER_LEVEL && Object.values<string>(LoggerLevel).includes(process.env.LOGGER_LEVEL)) {
+  logLevel = process.env.LOGGER_LEVEL as LoggerLevelValue
+} else if (process?.env?.LOG_LEVEL && Object.values<string>(LoggerLevel).includes(process.env.LOG_LEVEL)) {
+  logLevel = process.env.LOG_LEVEL as LoggerLevelValue
+}
+
+export const DEFAULT_LOG_LEVEL = logLevel
 
 export const VALID_LOGGER_LEVEL_VALUES = Object.values(LoggerLevel)

@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 3.1.0
+
+### Minor Changes
+
+- 38625b2: Read LOG_LEVEL env var if LOGGER_LEVEL does not exist
+
 ## 3.0.0
 
 ### Major Changes

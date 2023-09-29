@@ -11,6 +11,8 @@ describe('Logger', () => {
       info: jest.fn(),
       warn: jest.fn(),
     }
+
+    jest.useFakeTimers().setSystemTime(new Date('2023-09-28'))
   })
 
   afterEach(() => {
@@ -197,7 +199,9 @@ describe('Logger', () => {
 
       logger.process(mockTransportFn, LoggerLevel.ERROR, ['a message'])
 
-      expect(mockTransportFn).toHaveBeenCalledWith('{"level":"error","message":"a message"}')
+      expect(mockTransportFn).toHaveBeenCalledWith(
+        '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","message":"a message"}',
+      )
     })
 
     it("should set the message property to the first argument when it's a string", () => {
@@ -206,7 +210,9 @@ describe('Logger', () => {
 
       logger.process(mockTransportFn, LoggerLevel.ERROR, ['a message'])
 
-      expect(mockTransportFn).toHaveBeenCalledWith('{"level":"error","message":"a message"}')
+      expect(mockTransportFn).toHaveBeenCalledWith(
+        '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","message":"a message"}',
+      )
     })
 
     it("should not set the message property when the first argument isn't a string", () => {
@@ -215,7 +221,9 @@ describe('Logger', () => {
 
       logger.process(mockTransportFn, LoggerLevel.ERROR, [123, 'test string'])
 
-      expect(mockTransportFn).toHaveBeenCalledWith('{"level":"error","data":[123,"test string"]}')
+      expect(mockTransportFn).toHaveBeenCalledWith(
+        '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","data":[123,"test string"]}',
+      )
     })
 
     it('should set the data property to the first array entry when there is only one item in the args array', () => {
@@ -224,7 +232,9 @@ describe('Logger', () => {
 
       logger.process(mockTransportFn, LoggerLevel.ERROR, [123])
 
-      expect(mockTransportFn).toHaveBeenCalledWith('{"level":"error","data":123}')
+      expect(mockTransportFn).toHaveBeenCalledWith(
+        '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","data":123}',
+      )
     })
 
     it('should set the data property to the first array entry when there is only one item in the args array', () => {
@@ -233,7 +243,9 @@ describe('Logger', () => {
 
       logger.process(mockTransportFn, LoggerLevel.ERROR, [123])
 
-      expect(mockTransportFn).toHaveBeenCalledWith('{"level":"error","data":123}')
+      expect(mockTransportFn).toHaveBeenCalledWith(
+        '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","data":123}',
+      )
     })
   })
 })

@@ -17,6 +17,7 @@ export interface LoggerOptions {
   level?: LoggerLevelValue
   baseData?: Record<string, any>
   transport?: LoggerTransport
+  bufferEnabled?: boolean
 }
 
 /**
@@ -32,6 +33,7 @@ export type LoggerTransport = {
 
 export interface LoggerOutput {
   level: LoggerLevelValue
+  timestamp: string
   message?: string
   base?: Record<string, any>
   data?: any

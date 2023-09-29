@@ -3,11 +3,13 @@ import { transformData } from '../transform/transform'
 
 export function generateOutput(
   level: LoggerLevelValue,
+  timestamp: string,
   baseData: Record<string, any> | null,
   args: any[],
 ): LoggerOutput {
   const output: LoggerOutput = {
     level,
+    timestamp,
   }
   let outputData = args
   if (baseData) {

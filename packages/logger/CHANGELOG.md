@@ -1,5 +1,11 @@
 # @gradientedge/logger
 
+## 4.0.0
+
+### Major Changes
+
+- 99bc242: Add optional debug log buffering to the logger.
+
 ## 3.1.0
 
 ### Minor Changes

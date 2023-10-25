@@ -1,6 +1,6 @@
 {
   "name": "@gradientedge/logger",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "description": "Request-context sensitive logger package",
   "author": "Jimmy Thomson <jimmy@gradientedge.com>",
   "homepage": "https://github.com/gradientedge/common-utils#readme",

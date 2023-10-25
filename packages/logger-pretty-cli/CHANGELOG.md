@@ -1,5 +1,16 @@
 # @gradientedge/logger-pretty-cli
 
+## 1.0.0
+
+### Major Changes
+
+- 99bc242: Add optional debug log buffering to the logger.
+
+### Patch Changes
+
+- Updated dependencies [99bc242]
+  - @gradientedge/logger@4.0.0
+
 ## 0.7.1
 
 ### Patch Changes

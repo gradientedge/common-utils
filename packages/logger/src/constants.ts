@@ -29,4 +29,6 @@ if (process?.env?.LOGGER_LEVEL && Object.values<string>(LoggerLevel).includes(pr
 
 export const DEFAULT_LOG_LEVEL = logLevel
 
+export const LOG_BUFFER_ENABLED = process?.env?.LOG_BUFFER_ENABLED !== '0'
+
 export const VALID_LOGGER_LEVEL_VALUES = Object.values(LoggerLevel)

@@ -5,6 +5,6 @@ export function isApplicable(jsonObject: any) {
   return (
     isPlainObject(jsonObject) &&
     propNames.length &&
-    propNames.every((name) => ['message', 'data', 'base', 'level'].includes(name))
+    propNames.every((name) => ['message', 'data', 'base', 'level', 'timestamp'].includes(name))
   )
 }

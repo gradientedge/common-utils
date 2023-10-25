@@ -1,16 +1,27 @@
-import { DEFAULT_LOG_LEVEL, LogLevelNumber, VALID_LOGGER_LEVEL_VALUES } from './constants'
+import { DEFAULT_LOG_LEVEL, LOG_BUFFER_ENABLED, VALID_LOGGER_LEVEL_VALUES, LogLevelNumber } from './constants'
 import { LoggerOptions, LoggerTransport, LoggerLevelValue } from './types'
 import { generateOutput } from './output'
 import stringify from 'json-stringify-safe'
 import { Console } from 'node:console'
+
+export interface LogBuffer {
+  method: (...args: any[]) => any
+  level: LoggerLevelValue
+  timestamp: string
+  args: any[]
+}
 
 export class Logger {
   public baseData: Record<string, any> | null
   public readonly levelName: LoggerLevelValue
   public readonly levelNumber: number
   public readonly transport: LoggerTransport
+  public buffer: LogBuffer[]
+  public bufferEnabled: boolean
+  public bufferInitiallyEnabled: boolean
 
   constructor(options?: LoggerOptions) {
+    this.buffer = []
     this.baseData = options?.baseData ?? null
 
     if (options?.level && VALID_LOGGER_LEVEL_VALUES.includes(options.level)) {
@@ -28,10 +39,18 @@ export class Logger {
         stderr: process.stderr,
       })
     }
+
+    this.bufferEnabled = LOG_BUFFER_ENABLED
+
+    if (options?.bufferEnabled !== undefined) {
+      this.bufferEnabled = options?.bufferEnabled
+    }
+
+    this.bufferInitiallyEnabled = this.bufferEnabled
   }
 
   debug(...args: any[]) {
-    this.process(this.transport.debug, 'debug', args)
+    this.processWithBuffer(this.transport.debug, 'debug', args)
   }
 
   info(...args: any[]) {
@@ -43,6 +62,9 @@ export class Logger {
   }
 
   error(...args: any[]) {
+    // Turn off further buffering.
+    this.disableBuffering()
+    this.flushBuffer()
     this.process(this.transport.error, 'error', args)
   }
 
@@ -50,15 +72,57 @@ export class Logger {
     this.transport.debug(input)
   }
 
-  process(method: (...args: any[]) => any, level: LoggerLevelValue, args: any[]) {
+  process(
+    method: (...args: any[]) => any,
+    level: LoggerLevelValue,
+    args: any[],
+    timestamp?: string,
+    forceOutput?: boolean,
+  ) {
     const levelNumber = LogLevelNumber[level]
 
-    if (levelNumber < this.levelNumber || !Array.isArray(args) || args.length === 0) {
+    if ((levelNumber < this.levelNumber || !Array.isArray(args) || args.length === 0) && !forceOutput) {
       return
     }
 
-    const output = generateOutput(level, this.baseData, args)
+    if (!timestamp) {
+      timestamp = new Date().toISOString()
+    }
+
+    const output = generateOutput(level, timestamp, this.baseData, args)
 
     method(stringify(output))
+  }
+
+  processWithBuffer(method: (...args: any[]) => any, level: LoggerLevelValue, args: any[]) {
+    if (this.levelNumber > LogLevelNumber[level] && level === 'debug' && this.bufferEnabled) {
+      this.buffer.push({ method, level, timestamp: new Date().toISOString(), args })
+    } else {
+      this.process(method, level, args)
+    }
+  }
+
+  flushBuffer() {
+    while (this.buffer.length) {
+      const log: LogBuffer | undefined = this.buffer.shift()
+
+      if (log) {
+        this.process(log.method, log.level, log.args, log.timestamp, true)
+      }
+    }
+  }
+
+  clearBuffer() {
+    this.buffer = []
+    // Restore buffering to its initial state.
+    this.bufferEnabled = this.bufferInitiallyEnabled
+  }
+
+  enableBuffering() {
+    this.bufferEnabled = true
+  }
+
+  disableBuffering() {
+    this.bufferEnabled = false
   }
 }

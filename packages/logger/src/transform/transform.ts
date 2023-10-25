@@ -1,11 +1,9 @@
 import { transformError } from './error'
-import { maskSensitiveData } from '../mask'
 
 export function transformData(data: any[]): any {
-  // Step 1 - filter out any fields we don't want
-  //        - How are we going to avoid massive log output when someone tries
-  //          to output a response object for example?
-  // Step 2 - mask sensitive fields
+  // filter out any fields we don't want
+  // How are we going to avoid massive log output when someone tries
+  // to output a response object for example?
 
   let transformedData
   data.forEach((item: any) => {
@@ -18,5 +16,5 @@ export function transformData(data: any[]): any {
   } else {
     transformedData = data
   }
-  return maskSensitiveData(transformedData)
+  return transformedData
 }

@@ -45,3 +45,22 @@ following values:
 
 If set, this will be used as the default log level for any new instances
 of the `Logger` class.
+
+### Transforming logger output
+
+If you want to transform the output of the logger, you can pass a function to the `transform` option when creating a new logger instance.
+
+example:
+```typescript
+import { Logger } from '@gradientedge/logger'
+
+const myLogger = new Logger({
+  transform: (message, level, timestamp) => {
+    return {
+      message: message.toUpperCase(),
+      level,
+      timestamp,
+    }
+  },
+})
+```

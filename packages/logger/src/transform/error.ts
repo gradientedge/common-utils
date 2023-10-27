@@ -3,17 +3,9 @@
  *
  * @param error - The error object to transform.
  * @param recursionLevel - The current recursion level (default: 0).
- * @param customTransformError - Optional - A custom function to process the error object.
  * @returns The transformed error object.
  */
-export function transformError(
-  error: Error & Record<string, any>,
-  recursionLevel = 0,
-  customTransformError?: (error: any) => any,
-): any {
-  if (customTransformError !== null && customTransformError) {
-    return customTransformError(error)
-  }
+export function transformError(error: Error & Record<string, any>, recursionLevel = 0): any {
   if (recursionLevel > 5) {
     return
   }

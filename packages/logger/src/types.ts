@@ -18,6 +18,7 @@ export interface LoggerOptions {
   baseData?: Record<string, any>
   transport?: LoggerTransport
   bufferEnabled?: boolean
+  transformer?: any
 }
 
 /**

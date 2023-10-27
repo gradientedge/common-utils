@@ -19,6 +19,7 @@ export class Logger {
   public buffer: LogBuffer[]
   public bufferEnabled: boolean
   public bufferInitiallyEnabled: boolean
+  public transformer?: any
 
   constructor(options?: LoggerOptions) {
     this.buffer = []
@@ -47,6 +48,10 @@ export class Logger {
     }
 
     this.bufferInitiallyEnabled = this.bufferEnabled
+
+    if (options?.transformer !== undefined) {
+      this.transformer = options.transformer
+    }
   }
 
   debug(...args: any[]) {
@@ -89,7 +94,11 @@ export class Logger {
       timestamp = new Date().toISOString()
     }
 
-    const output = generateOutput(level, timestamp, this.baseData, args)
+    let output = generateOutput(level, timestamp, this.baseData, args)
+
+    if (this.transformer) {
+      output = this.transformer(output)
+    }
 
     method(stringify(output))
   }

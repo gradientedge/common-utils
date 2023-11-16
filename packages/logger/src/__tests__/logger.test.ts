@@ -54,6 +54,13 @@ describe('Logger', () => {
       expect(logger.levelName).toBe('debug')
       expect(logger.levelNumber).toBe(10)
     })
+
+    it('should set the transformer', () => {
+      const transformer = jest.fn()
+      const logger = new Logger({ transport, transformer })
+
+      expect(logger.transformer).toBe(transformer)
+    })
   })
 
   describe('error', () => {
@@ -245,6 +252,22 @@ describe('Logger', () => {
 
       expect(mockTransportFn).toHaveBeenCalledWith(
         '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","data":123}',
+      )
+    })
+
+    it('should use the custom transformer to modify output', () => {
+      const mockTransformerFn = jest.fn(() => ({
+        level: 'error',
+        timestamp: '2023-09-28T00:00:00.000Z',
+        message: 'a transformed message',
+      }))
+      const logger = new Logger({ transport, transformer: mockTransformerFn })
+      const mockTransportFn = jest.fn()
+
+      logger.process(mockTransportFn, LoggerLevel.ERROR, ['a message'])
+
+      expect(mockTransportFn).toHaveBeenCalledWith(
+        '{"level":"error","timestamp":"2023-09-28T00:00:00.000Z","message":"a transformed message"}',
       )
     })
   })

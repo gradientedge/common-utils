@@ -1,5 +1,5 @@
 import { DEFAULT_LOG_LEVEL, LOG_BUFFER_ENABLED, VALID_LOGGER_LEVEL_VALUES, LogLevelNumber } from './constants'
-import { LoggerOptions, LoggerTransport, LoggerLevelValue } from './types'
+import { LoggerOptions, LoggerOutput, LoggerTransport, LoggerLevelValue } from './types'
 import { generateOutput } from './output'
 import stringify from 'json-stringify-safe'
 import { Console } from 'node:console'
@@ -10,6 +10,9 @@ export interface LogBuffer {
   timestamp: string
   args: any[]
 }
+export interface Transformer {
+  (input: LoggerOutput): LoggerOutput
+}
 
 export class Logger {
   public baseData: Record<string, any> | null
@@ -19,6 +22,7 @@ export class Logger {
   public buffer: LogBuffer[]
   public bufferEnabled: boolean
   public bufferInitiallyEnabled: boolean
+  public transformer?: Transformer
 
   constructor(options?: LoggerOptions) {
     this.buffer = []
@@ -47,6 +51,10 @@ export class Logger {
     }
 
     this.bufferInitiallyEnabled = this.bufferEnabled
+
+    if (options?.transformer !== undefined) {
+      this.transformer = options.transformer
+    }
   }
 
   debug(...args: any[]) {
@@ -89,7 +97,11 @@ export class Logger {
       timestamp = new Date().toISOString()
     }
 
-    const output = generateOutput(level, timestamp, this.baseData, args)
+    let output: LoggerOutput = generateOutput(level, timestamp, this.baseData, args)
+
+    if (this.transformer) {
+      output = this.transformer(output)
+    }
 
     method(stringify(output))
   }

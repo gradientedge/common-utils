@@ -4,7 +4,8 @@ description: Setup environment
 runs:
   using: "composite"
   steps:
-    - uses: pnpm/action-setup@v2.0.1
-      with:
-        version: 6.25.1
+    - name: install pnpm
+      if: inputs.with-pnpm != 'true'
+      shell: bash
+      run: npm i -g pnpm@9
 

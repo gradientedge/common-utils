@@ -1,5 +1,11 @@
 # @gradientedge/axios-client
 
+## 1.13.0
+
+### Minor Changes
+
+- d8f039f: Dependency bump
+
 ## 1.12.0
 
 ### Minor Changes
